@@ -45,9 +45,13 @@ header{background:linear-gradient(135deg,var(--blue-dark),var(--blue-mid));color
 .sec-head{display:flex;align-items:center;gap:10px;font-size:1.05rem;font-weight:700;color:var(--blue-dark);margin-bottom:22px}
 .sec-head::before{content:'';display:block;width:4px;height:24px;background:var(--blue);border-radius:2px}
 
-/* FULL-WIDTH GRID */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:18px}
-@media(max-width:640px){.grid{grid-template-columns:1fr}}
+/* TWO-ROW GRID */
+.grid-row{display:grid;gap:18px}
+.g-top{grid-template-columns:repeat(3,1fr)}
+.g-bot{grid-template-columns:repeat(4,1fr)}
+@media(max-width:960px){.g-bot{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:780px){.g-top{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.g-top{grid-template-columns:1fr}.g-bot{grid-template-columns:1fr}}
 
 /* ===== CARD ===== */
 .card{background:#fff;border-radius:14px;box-shadow:var(--shadow);border:1.5px solid var(--border);overflow:hidden;display:flex;flex-direction:column;transition:transform .18s,box-shadow .18s}
@@ -229,7 +233,8 @@ footer{text-align:center;font-size:.75rem;color:#89a;padding:20px}
 <!-- MODULES -->
 <section class="modules">
   <div class="sec-head">Chọn học phần để bắt đầu</div>
-  <div class="grid">
+  <!-- Hàng 1: Chính sách & Form -->
+  <div class="grid-row g-top">
 
     <!-- M1 -->
     <div class="card">
@@ -265,12 +270,34 @@ footer{text-align:center;font-size:.75rem;color:#89a;padding:20px}
       </div>
     </div>
 
+    <!-- MF3 — MỚI -->
+    <div class="card">
+      <div class="card-hdr">
+        <div class="card-ico">📝</div>
+        <div class="card-hdr-txt">
+          <div class="card-num">Học phần 03</div>
+          <div class="card-title">Tab F3 — Thông tin thuê bao</div>
+        </div>
+      </div>
+      <div class="card-desc">Cách điền Tab F3 cho từng sản phẩm: Camera, Mesh Wifi và Pack 03 CAM. Các bước tiếp theo sau F3.</div>
+      <div class="card-actions">
+        <button class="act learn" onclick="openModal('mf3','learn')"><span class="ai">📚</span>Học</button>
+        <button class="act qa" onclick="openModal('mf3','qa')"><span class="ai">✍️</span>Ôn tập</button>
+        <button class="act game" onclick="openModal('mf3','game')"><span class="ai">🎮</span>Trò chơi</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Hàng 2: Sản phẩm -->
+  <div class="grid-row g-bot" style="margin-top:18px">
+
     <!-- M3 -->
     <div class="card">
       <div class="card-hdr">
         <div class="card-ico">📷</div>
         <div class="card-hdr-txt">
-          <div class="card-num">Học phần 03</div>
+          <div class="card-num">Học phần 04</div>
           <div class="card-title">Camera + Thẻ 64G</div>
         </div>
       </div>
@@ -287,7 +314,7 @@ footer{text-align:center;font-size:.75rem;color:#89a;padding:20px}
       <div class="card-hdr">
         <div class="card-ico">☁️</div>
         <div class="card-hdr-txt">
-          <div class="card-num">Học phần 04</div>
+          <div class="card-num">Học phần 05</div>
           <div class="card-title">Camera Outdoor + Cloud</div>
         </div>
       </div>
@@ -304,7 +331,7 @@ footer{text-align:center;font-size:.75rem;color:#89a;padding:20px}
       <div class="card-hdr">
         <div class="card-ico">🌐</div>
         <div class="card-hdr-txt">
-          <div class="card-num">Học phần 05</div>
+          <div class="card-num">Học phần 06</div>
           <div class="card-title">Mesh Wifi</div>
         </div>
       </div>
@@ -321,7 +348,7 @@ footer{text-align:center;font-size:.75rem;color:#89a;padding:20px}
       <div class="card-hdr">
         <div class="card-ico">📦</div>
         <div class="card-hdr-txt">
-          <div class="card-num">Học phần 06</div>
+          <div class="card-num">Học phần 07</div>
           <div class="card-title">Pack 03 CAM</div>
         </div>
       </div>
@@ -423,6 +450,53 @@ footer{text-align:center;font-size:.75rem;color:#89a;padding:20px}
     </div>
   </div>
   <div class="tab-panel" id="m2-game"><div class="game-box" id="game-m2"></div></div>
+</div></div>
+
+<!-- ===== MF3 MODAL ===== -->
+<div class="overlay" id="mf3"><div class="modal">
+  <div class="modal-head"><span class="icon">📝</span><h2>Tab F3 — Thông tin thuê bao</h2><button class="modal-close" onclick="closeModal('mf3')">✕</button></div>
+  <div class="modal-tabs">
+    <button class="tab-btn t-learn active" onclick="switchTab('mf3','learn')"><span class="t-icon">📚</span><span class="t-label">Học</span></button>
+    <button class="tab-btn t-qa" onclick="switchTab('mf3','qa')"><span class="t-icon">✍️</span><span class="t-label">Ôn tập</span></button>
+    <button class="tab-btn t-game" onclick="switchTab('mf3','game')"><span class="t-icon">🎮</span><span class="t-label">Trò chơi</span></button>
+  </div>
+  <div class="tab-panel active" id="mf3-learn">
+    <div class="note">Tab F3 điền <strong>khác nhau cho từng sản phẩm</strong>. Cần phân biệt Dịch vụ, Loại hình và Tốc độ theo đúng gói đăng ký.</div>
+    <h3>Bảng so sánh các trường Tab F3</h3>
+    <div style="overflow-x:auto">
+    <table>
+      <tr><th>Trường</th><th>Mesh 6 (7T)</th><th>Mesh 6 (TTN)</th><th>Cam + Thẻ 64G</th><th>Cam+Cloud TB1</th><th>Cam+Cloud TB2</th><th>Pack 03 CAM</th></tr>
+      <tr><td>① Dịch vụ</td><td>Băng rộng cố định</td><td>Băng rộng cố định</td><td>Camera / MegaEyes</td><td>Camera / MegaEyes</td><td>Camera / MegaEyes</td><td>Camera / MegaEyes</td></tr>
+      <tr><td>② Loại hình</td><td>Wifi Mesh</td><td>Wifi Mesh</td><td>Indoor / Outdoor Camera PT</td><td>Outdoor Camera PT</td><td>Home Cloud Camera</td><td>Indoor Camera PT</td></tr>
+      <tr><td>③ Kiểu YC</td><td colspan="2">Đặt mới Mesh Wifi trên đường quang có sẵn</td><td>Lắp mới MegaEyes trên Fiber có sẵn</td><td>Lắp mới MegaEyes</td><td>Đặt mới cloud kèm camera</td><td>Lắp mới MegaEyes</td></tr>
+      <tr><td>⑤ SĐT / OTP</td><td>❌</td><td>❌</td><td>✅ Bắt buộc</td><td>✅</td><td>✅</td><td>✅</td></tr>
+      <tr><td>Tốc độ</td><td>Wifi Mesh 6</td><td><strong>Wifi Mesh 6 TTN</strong></td><td>Cam_IN_64G / Cam_OUT-64G</td><td>Outdoor 022022</td><td>Home Cloud 07</td><td>Indoor 022022</td></tr>
+      <tr><td>⑦ Trang bị</td><td>VT trang bị</td><td><strong>Mua thiết bị</strong></td><td>VT trang bị</td><td>VT trang bị</td><td><strong>KH tự trang bị</strong></td><td>VT trang bị</td></tr>
+      <tr><td>Tổng tiền</td><td>270,000đ</td><td>646,000đ</td><td>180,000đ</td><td>0đ (+55k phí)</td><td>360,000đ</td><td>0đ (đặt cọc 480k)</td></tr>
+    </table>
+    </div>
+    <div class="warn"><strong>Lưu ý:</strong><br>• Mesh TTN: Trang bị = <strong>Mua thiết bị</strong>, Tốc độ = <strong>Wifi Mesh 6 TTN</strong><br>• Camera+Cloud TB2 (Home Cloud): Mã TN = <strong>Account Camera</strong> TB1, Trang bị = <strong>KH tự trang bị</strong></div>
+    <h3>Các bước sau khi hoàn thành F3</h3>
+    <div class="steps">
+      <div class="step"><div class="step-num">14</div><div class="step-content"><strong>Thêm TB</strong> — Thêm thuê bao tiếp theo (nếu có nhiều TB)</div></div>
+      <div class="step"><div class="step-num">15</div><div class="step-content"><strong>Gói đa DV</strong> — Ghép gói đa dịch vụ (Pack 03, Cloud 7...)</div></div>
+      <div class="step"><div class="step-num">16</div><div class="step-content"><strong>Liên hệ</strong> — Xác nhận liên hệ với khách hàng</div></div>
+      <div class="step"><div class="step-num">17</div><div class="step-content"><strong>Hẹn LĐ</strong> — Hẹn ngày lắp đặt</div></div>
+      <div class="step"><div class="step-num">18</div><div class="step-content"><strong>Thanh toán</strong> — Thanh toán hợp đồng</div></div>
+      <div class="step"><div class="step-num">19</div><div class="step-content"><strong>Giao phiếu</strong> — Giao phiếu thi công</div></div>
+    </div>
+  </div>
+  <div class="tab-panel" id="mf3-qa">
+    <div class="qa-list">
+      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">1</span>Mesh 6 gói 7 tháng (VT trang bị) có Tốc độ là gì?</div><div class="qa-a">✅ <strong>Wifi Mesh 6</strong> (còn gói TTN — KH mua thiết bị — là "Wifi Mesh 6 TTN")</div></div>
+      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">2</span>Mesh 6 TTN khác Mesh 6 thường ở những điểm gì trong Tab F3?</div><div class="qa-a">✅ Hai điểm khác: <strong>Tốc độ = Wifi Mesh 6 TTN</strong> và <strong>Trang bị = Mua thiết bị</strong> (KH tự mua, không do VT trang bị)</div></div>
+      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">3</span>Khi lập HĐ Camera + Thẻ 64G, trường SĐT có bắt buộc không?</div><div class="qa-a">✅ <strong>Có — bắt buộc nhập SĐT</strong> (và cần OTP). Ngược lại với Mesh Wifi — không cần SĐT/OTP.</div></div>
+      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">4</span>TB2 (Home Cloud Camera) trong gói Camera+Cloud có Mã TN là gì?</div><div class="qa-a">✅ Mã TN của TB2 = <strong>Account Camera</strong> vừa tạo ở TB1 (không phải FiberVNN mới)</div></div>
+      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">5</span>Sau khi điền xong Tab F3, bước tiếp theo là gì?</div><div class="qa-a">✅ Bước 14 — <strong>Thêm TB</strong> (nếu nhiều TB), sau đó: Gói đa DV (15) → Liên hệ (16) → Hẹn LĐ (17) → Thanh toán (18) → Giao phiếu (19)</div></div>
+      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">6</span>Trang bị của TB2 Home Cloud Camera là gì?</div><div class="qa-a">✅ <strong>Khách hàng tự trang bị</strong> (KH đã có Camera từ TB1, chỉ đăng ký thêm dịch vụ Cloud)</div></div>
+    </div>
+  </div>
+  <div class="tab-panel" id="mf3-game"><div class="game-box" id="game-mf3"></div></div>
 </div></div>
 
 <!-- ===== M3 MODAL ===== -->
@@ -679,6 +753,13 @@ const QUIZ={
     {q:'KH trả hàng tháng, khi Thanh toán chọn hình thức nào?',opts:['Tiền mặt — Thu ngay','Không thu tiền / Nộp tiền sau','Chuyển khoản','Quẹt thẻ POS'],ans:1,ex:'Trả sau = không tích Trả trước + Thanh toán chọn "Không thu tiền / Nộp tiền sau".'},
     {q:'Camera Outdoor + Thẻ 64G trả 1 tháng giá bao nhiêu?',opts:['30,000đ','40,000đ','50,000đ','60,000đ'],ans:2,ex:'Camera Outdoor + Thẻ 64G 1 tháng = 50,000đ (Indoor = 30,000đ).'},
     {q:'Quy trình xử lý HĐ trên OneBSS có tổng bao nhiêu bước?',opts:['6 bước','7 bước','8 bước','9 bước'],ans:3,ex:'9 bước: Lập HĐ → Ghép gói → Liên hệ → Hẹn LĐ → Thanh toán → Giao phiếu + 3 bước hoàn tác.'},
+  ],
+  mf3:[
+    {q:'Mesh 6 gói 7 tháng (VT trang bị), trường Tốc độ phải điền gì?',opts:['Wifi Mesh 6 TTN','Wifi Mesh 6','MESH-2021','Pack2_M5'],ans:1,ex:'"Wifi Mesh 6" cho gói VT trang bị. "Wifi Mesh 6 TTN" chỉ dùng khi KH mua thiết bị (Thanh toán ngay).'},
+    {q:'Mesh 6 TTN khác Mesh thường ở những trường nào trong F3?',opts:['Dịch vụ và Loại hình','Tốc độ và Trang bị','Kiểu YC và SĐT','Mã TN và Loại thiết bị'],ans:1,ex:'TTN: Tốc độ = "Wifi Mesh 6 TTN", Trang bị = "Mua thiết bị". Các trường khác giống gói thường.'},
+    {q:'Khi lập TB2 (Home Cloud Camera), Mã TN phải điền gì?',opts:['Account FiberVNN mới','Để trống','Account Camera TB1 tương ứng','Mã HRM của nhân viên'],ans:2,ex:'TB2 Cloud phải liên kết đúng Account Camera vừa tạo ở TB1, không được tạo tài khoản mới.'},
+    {q:'Sản phẩm nào KHÔNG cần nhập SĐT ở Tab F3?',opts:['Camera + Thẻ 64G','Camera Outdoor + Cloud','Mesh Wifi','Pack 03 CAM'],ans:2,ex:'Mesh Wifi không yêu cầu SĐT/OTP. Tất cả gói Camera đều cần SĐT và xác thực OTP.'},
+    {q:'Sau khi hoàn tất Tab F3, bước số mấy là Thanh toán?',opts:['Bước 14','Bước 16','Bước 18','Bước 19'],ans:2,ex:'Thứ tự: Thêm TB(14) → Gói đa DV(15) → Liên hệ(16) → Hẹn LĐ(17) → Thanh toán(18) → Giao phiếu(19).'},
   ],
   m2:[
     {q:'Kiểu hợp đồng / PL phải chọn giá trị nào?',opts:['Tại văn phòng','Online','Tại nhà','Tại điểm giao dịch'],ans:2,ex:'Luôn chọn "Tại nhà" cho mọi loại hợp đồng.'},
