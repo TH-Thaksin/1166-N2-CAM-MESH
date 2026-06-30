@@ -7,225 +7,336 @@
 <style>
 :root{
   --blue:#0057A8;--blue-dark:#003F7A;--blue-mid:#1976D2;
-  --blue-light:#E3F0FB;--accent:#00A0E3;--white:#fff;
-  --gray:#f4f7fc;--text:#1a2a3a;--border:#d0e3f5;
+  --blue-light:#E3F0FB;--accent:#00A0E3;
+  --gray:#f0f5fc;--text:#1a2a3a;--border:#d0e3f5;
   --shadow:0 4px 20px rgba(0,87,168,.13);
   --green:#059669;--green-light:#ECFDF5;
   --amber:#D97706;--amber-light:#FFFBEB;
   --red:#dc2626;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',Arial,sans-serif;background:var(--gray);color:var(--text);min-height:100vh}
+html,body{width:100%;min-height:100vh}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--gray);color:var(--text)}
 
-/* HEADER */
-header{background:linear-gradient(135deg,var(--blue-dark) 0%,var(--blue-mid) 100%);color:var(--white);padding:0;box-shadow:0 3px 12px rgba(0,63,122,.4)}
-.header-inner{max-width:1100px;margin:0 auto;padding:20px 24px;display:flex;align-items:center;gap:20px}
-.vnpt-logo{background:var(--white);color:var(--blue-dark);font-weight:900;font-size:1.6rem;letter-spacing:2px;padding:6px 14px;border-radius:8px;flex-shrink:0;line-height:1}
-.header-text h1{font-size:1.2rem;font-weight:700;line-height:1.3}
-.header-text p{font-size:.82rem;opacity:.8;margin-top:3px}
+/* ===== HEADER ===== */
+header{background:linear-gradient(135deg,var(--blue-dark),var(--blue-mid));color:#fff;padding:12px 24px;box-shadow:0 3px 12px rgba(0,63,122,.4);display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:100}
+.vnpt-logo{background:#fff;color:var(--blue-dark);font-weight:900;font-size:1.5rem;letter-spacing:2px;padding:5px 12px;border-radius:8px;line-height:1;flex-shrink:0}
+.hdr-text h1{font-size:1.05rem;font-weight:700;line-height:1.3}
+.hdr-text p{font-size:.76rem;opacity:.8;margin-top:2px}
+@media(max-width:600px){.hdr-text h1{font-size:.9rem}.hdr-text p{display:none}}
 
-/* GRID */
-.container{max-width:1100px;margin:32px auto 64px;padding:0 16px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-@media(max-width:800px){.grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:500px){.grid{grid-template-columns:1fr}}
+/* ===== HERO ===== */
+.hero{background:linear-gradient(140deg,var(--blue-dark) 0%,#0e4d8c 55%,var(--blue-mid) 100%);color:#fff;padding:44px 24px 52px}
+.hero-inner{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:1fr 1.5fr;gap:44px;align-items:center}
+@media(max-width:900px){.hero-inner{grid-template-columns:1fr}}
+.hero-badge{display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);padding:4px 14px;border-radius:20px;font-size:.76rem;letter-spacing:.5px;margin-bottom:16px}
+.hero-title{font-size:2.4rem;font-weight:800;line-height:1.15;margin-bottom:14px}
+@media(max-width:600px){.hero-title{font-size:1.7rem}}
+.hero-sub{font-size:.95rem;opacity:.82;margin-bottom:22px;line-height:1.6}
+.hero-contact{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:9px 18px;border-radius:24px;font-size:.86rem}
+.hero-contact strong{color:#7de8ff}
+.hero-vid{display:flex;flex-direction:column;align-items:stretch;gap:10px}
+.embed-wrap{width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;border:3px solid rgba(255,255,255,.22);box-shadow:0 10px 40px rgba(0,0,0,.45)}
+.embed-wrap iframe{width:100%;height:100%;border:none;display:block}
+.embed-cap{font-size:.76rem;opacity:.65;text-align:center}
 
-/* CARD */
-.card{background:var(--white);border-radius:14px;box-shadow:var(--shadow);border:1.5px solid var(--border);cursor:pointer;overflow:hidden;transition:transform .18s,box-shadow .18s;display:flex;flex-direction:column}
-.card:hover{transform:translateY(-4px);box-shadow:0 8px 32px rgba(0,87,168,.2)}
-.card-icon{background:linear-gradient(135deg,var(--blue) 0%,var(--accent) 100%);height:90px;display:flex;align-items:center;justify-content:center;font-size:2.6rem}
-.card-body{padding:18px 16px 20px;flex:1;display:flex;flex-direction:column}
-.card-title{font-size:.98rem;font-weight:700;color:var(--blue-dark);margin-bottom:6px}
-.card-desc{font-size:.82rem;color:#556;line-height:1.5;flex:1}
-.card-btn{margin-top:14px;align-self:flex-start;background:var(--blue);color:var(--white);border:none;padding:7px 18px;border-radius:20px;font-size:.8rem;font-weight:600;cursor:pointer;transition:background .15s}
-.card-btn:hover{background:var(--blue-dark)}
+/* ===== MODULES SECTION ===== */
+.modules{padding:32px 24px 56px}
+.sec-head{display:flex;align-items:center;gap:10px;font-size:1.05rem;font-weight:700;color:var(--blue-dark);margin-bottom:22px}
+.sec-head::before{content:'';display:block;width:4px;height:24px;background:var(--blue);border-radius:2px}
 
-/* MODAL */
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,30,70,.55);z-index:1000;align-items:flex-start;justify-content:center;padding:24px 12px;overflow-y:auto}
+/* FULL-WIDTH GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:18px}
+@media(max-width:640px){.grid{grid-template-columns:1fr}}
+
+/* ===== CARD ===== */
+.card{background:#fff;border-radius:14px;box-shadow:var(--shadow);border:1.5px solid var(--border);overflow:hidden;display:flex;flex-direction:column;transition:transform .18s,box-shadow .18s}
+.card:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,87,168,.2)}
+.card-hdr{background:linear-gradient(135deg,var(--blue) 0%,var(--accent) 100%);padding:18px 18px 16px;display:flex;align-items:center;gap:14px}
+.card-ico{width:50px;height:50px;border-radius:12px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:1.7rem;flex-shrink:0}
+.card-hdr-txt .card-num{font-size:.68rem;color:rgba(255,255,255,.72);font-weight:600;letter-spacing:.5px;text-transform:uppercase}
+.card-hdr-txt .card-title{font-size:.95rem;font-weight:700;color:#fff;line-height:1.3}
+.card-desc{padding:14px 18px 16px;font-size:.82rem;color:#556;line-height:1.6;flex:1}
+
+/* 3-BUTTON ACTION ROW */
+.card-actions{display:flex;border-top:1.5px solid var(--border)}
+.act{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:13px 4px;border:none;background:#fff;cursor:pointer;font-size:.73rem;font-weight:700;transition:background .15s;border-right:1.5px solid var(--border);line-height:1}
+.act:last-child{border-right:none}
+.act .ai{font-size:1.3rem}
+.act.learn{color:var(--blue)}
+.act.learn:hover{background:var(--blue-light)}
+.act.qa{color:var(--amber)}
+.act.qa:hover{background:var(--amber-light)}
+.act.game{color:var(--green)}
+.act.game:hover{background:var(--green-light)}
+
+/* ===== MODAL ===== */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,30,70,.6);z-index:1000;align-items:flex-start;justify-content:center;padding:20px 12px;overflow-y:auto}
 .overlay.open{display:flex}
-.modal{background:var(--white);border-radius:16px;max-width:860px;width:100%;box-shadow:0 12px 48px rgba(0,0,0,.25);animation:slideUp .22s ease;position:relative;margin:auto}
-@keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
-.modal-head{background:linear-gradient(135deg,var(--blue-dark),var(--blue-mid));color:var(--white);padding:20px 24px;border-radius:16px 16px 0 0;display:flex;align-items:center;gap:14px}
-.modal-head .icon{font-size:1.8rem}
-.modal-head h2{font-size:1.1rem;font-weight:700}
-.modal-close{margin-left:auto;background:rgba(255,255,255,.2);border:none;color:var(--white);width:32px;height:32px;border-radius:50%;font-size:1.2rem;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.modal{background:#fff;border-radius:16px;width:min(920px,97vw);box-shadow:0 12px 48px rgba(0,0,0,.3);animation:sUp .22s ease;position:relative;margin:auto}
+@keyframes sUp{from{transform:translateY(28px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-head{background:linear-gradient(135deg,var(--blue-dark),var(--blue-mid));color:#fff;padding:18px 22px;border-radius:16px 16px 0 0;display:flex;align-items:center;gap:12px}
+.modal-head .icon{font-size:1.6rem}
+.modal-head h2{font-size:1.05rem;font-weight:700}
+.modal-close{margin-left:auto;background:rgba(255,255,255,.2);border:none;color:#fff;width:32px;height:32px;border-radius:50%;font-size:1.2rem;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:background .15s}
 .modal-close:hover{background:rgba(255,255,255,.35)}
 
-/* ===== ICON TABS ===== */
+/* MODAL TABS */
 .modal-tabs{display:flex;gap:10px;padding:14px 16px;background:#f0f5fc;border-bottom:1px solid var(--border)}
-.tab-btn{
-  flex:1;display:flex;flex-direction:column;align-items:center;
-  gap:5px;padding:12px 6px 10px;
-  border-radius:12px;border:2px solid #dde8f5;
-  background:var(--white);cursor:pointer;
-  transition:all .18s;
-  box-shadow:0 2px 8px rgba(0,87,168,.07);
-  color:#667;
-}
-.tab-btn:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,87,168,.15)}
-.tab-btn .t-icon{font-size:1.7rem;line-height:1}
-.tab-btn .t-label{font-size:.78rem;font-weight:700;letter-spacing:.3px}
-/* Học — blue */
+.tab-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;padding:12px 6px 10px;border-radius:12px;border:2px solid #dde8f5;background:#fff;cursor:pointer;transition:all .18s;color:#778;box-shadow:0 2px 8px rgba(0,87,168,.06)}
+.tab-btn:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,87,168,.14)}
+.tab-btn .t-icon{font-size:1.6rem;line-height:1}
+.tab-btn .t-label{font-size:.76rem;font-weight:700;letter-spacing:.2px}
 .tab-btn.t-learn.active{background:var(--blue-light);border-color:var(--blue);color:var(--blue)}
 .tab-btn.t-learn:hover{border-color:var(--blue)}
-/* Ôn tập — amber */
 .tab-btn.t-qa.active{background:var(--amber-light);border-color:var(--amber);color:var(--amber)}
 .tab-btn.t-qa:hover{border-color:var(--amber)}
-/* Trò chơi — green */
 .tab-btn.t-game.active{background:var(--green-light);border-color:var(--green);color:var(--green)}
 .tab-btn.t-game:hover{border-color:var(--green)}
 
-.tab-panel{display:none;padding:24px;max-height:70vh;overflow-y:auto}
+.tab-panel{display:none;padding:22px;max-height:72vh;overflow-y:auto}
 .tab-panel.active{display:block}
 
 /* CONTENT */
-.tab-panel h3{color:var(--blue-dark);font-size:1rem;border-left:4px solid var(--blue);padding-left:10px;margin:20px 0 10px}
+.tab-panel h3{color:var(--blue-dark);font-size:.96rem;border-left:4px solid var(--blue);padding-left:10px;margin:18px 0 10px}
 .tab-panel h3:first-child{margin-top:0}
-.tab-panel p{font-size:.88rem;line-height:1.7;margin:6px 0}
-.tab-panel ul,.tab-panel ol{font-size:.88rem;margin:6px 0 6px 20px;line-height:1.8}
+.tab-panel p{font-size:.86rem;line-height:1.7;margin:6px 0}
+.tab-panel ul,.tab-panel ol{font-size:.86rem;margin:6px 0 6px 20px;line-height:1.8}
 .tab-panel strong{color:var(--blue-dark)}
-.note{background:#fff8e1;border-left:4px solid #f59e0b;padding:10px 14px;border-radius:0 8px 8px 0;font-size:.85rem;color:#7a5000;margin:12px 0}
-.warn{background:#e8f5ff;border-left:4px solid var(--blue);padding:10px 14px;border-radius:0 8px 8px 0;font-size:.85rem;color:#00407a;margin:12px 0}
+.note{background:#fff8e1;border-left:4px solid #f59e0b;padding:10px 14px;border-radius:0 8px 8px 0;font-size:.83rem;color:#7a5000;margin:12px 0}
+.warn{background:#e8f5ff;border-left:4px solid var(--blue);padding:10px 14px;border-radius:0 8px 8px 0;font-size:.83rem;color:#00407a;margin:12px 0}
 
-/* TABLE */
-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.83rem}
-th{background:var(--blue);color:var(--white);padding:8px 10px;text-align:left}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.82rem}
+th{background:var(--blue);color:#fff;padding:8px 10px;text-align:left}
 td{padding:7px 10px;border-bottom:1px solid #e8eef5}
 tr:nth-child(even) td{background:#f7faff}
 tr:hover td{background:#eef4ff}
 
-/* IMAGES */
 .img-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:12px 0}
-@media(max-width:600px){.img-grid{grid-template-columns:1fr}}
+@media(max-width:560px){.img-grid{grid-template-columns:1fr}}
 .img-item{border-radius:8px;overflow:hidden;border:1px solid var(--border);cursor:zoom-in}
 .img-item img{width:100%;display:block;transition:transform .2s}
 .img-item:hover img{transform:scale(1.02)}
-.img-caption{font-size:.75rem;text-align:center;padding:5px;background:#f7faff;color:#556}
+.img-caption{font-size:.72rem;text-align:center;padding:5px;background:#f7faff;color:#556}
 
 /* VIDEO CARDS */
 .video-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:12px 0}
-@media(max-width:500px){.video-list{grid-template-columns:1fr}}
-.video-card{
-  background:var(--blue-light);border:1.5px solid var(--border);
-  border-radius:10px;padding:0;overflow:hidden;
-  transition:box-shadow .15s,transform .15s;
-  display:flex;flex-direction:column;
-}
-.video-card:hover{box-shadow:0 4px 16px rgba(0,87,168,.18);transform:translateY(-2px)}
+@media(max-width:480px){.video-list{grid-template-columns:1fr}}
+.video-card{background:var(--blue-light);border:1.5px solid var(--border);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .15s,transform .15s}
+.video-card:hover:not(.no-link){box-shadow:0 4px 16px rgba(0,87,168,.2);transform:translateY(-2px)}
 a.video-link{text-decoration:none;color:inherit;display:flex;flex-direction:column;height:100%}
-.video-thumb{
-  background:linear-gradient(135deg,var(--blue-dark) 0%,var(--blue-mid) 100%);
-  height:64px;display:flex;align-items:center;justify-content:center;gap:10px;
-  position:relative;
-}
-.video-thumb .play-circle{
-  width:36px;height:36px;border-radius:50%;
-  background:rgba(255,255,255,.9);color:var(--blue-dark);
-  display:flex;align-items:center;justify-content:center;
-  font-size:1rem;flex-shrink:0;
-  box-shadow:0 2px 8px rgba(0,0,0,.2);
-}
-.video-thumb .drive-badge{
-  position:absolute;top:6px;right:8px;
-  background:rgba(255,255,255,.85);border-radius:4px;
-  padding:1px 5px;font-size:.65rem;font-weight:700;color:#1a73e8;
-}
-.video-info{padding:10px 12px;flex:1}
-.video-info .vname{font-size:.82rem;font-weight:700;color:var(--blue-dark);line-height:1.4}
-.video-info .vdesc{font-size:.74rem;color:#557;margin-top:2px}
-.video-info .vopen{font-size:.72rem;color:var(--blue);margin-top:4px;font-weight:600}
-/* No-link video card */
-.video-card.no-link{opacity:.75}
+.video-thumb{background:linear-gradient(135deg,var(--blue-dark),var(--blue-mid));height:60px;display:flex;align-items:center;justify-content:center;position:relative}
+.play-circle{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.9);color:var(--blue-dark);display:flex;align-items:center;justify-content:center;font-size:.95rem;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.drive-badge{position:absolute;top:6px;right:8px;background:rgba(255,255,255,.88);border-radius:4px;padding:1px 5px;font-size:.63rem;font-weight:700;color:#1a73e8}
+.video-info{padding:9px 12px;flex:1}
+.vname{font-size:.8rem;font-weight:700;color:var(--blue-dark);line-height:1.4}
+.vdesc{font-size:.72rem;color:#557;margin-top:2px}
+.vopen{font-size:.7rem;color:var(--blue);margin-top:4px;font-weight:600}
+.video-card.no-link{opacity:.72}
 .video-card.no-link .video-thumb{background:linear-gradient(135deg,#6b7280,#9ca3af)}
 
 /* STEPS */
 .steps{margin:12px 0}
-.step{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid #eef}
+.step{display:flex;gap:12px;align-items:flex-start;padding:9px 0;border-bottom:1px solid #eef}
 .step:last-child{border-bottom:none}
-.step-num{width:28px;height:28px;border-radius:50%;background:var(--blue);color:var(--white);font-size:.8rem;font-weight:700;flex-shrink:0;display:flex;align-items:center;justify-content:center}
-.step-content{font-size:.85rem;line-height:1.6}
+.step-num{width:26px;height:26px;border-radius:50%;background:var(--blue);color:#fff;font-size:.78rem;font-weight:700;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.step-content{font-size:.84rem;line-height:1.6;padding-top:2px}
 .step-content strong{color:var(--blue-dark)}
 
 /* Q&A */
 .qa-list{margin:12px 0;display:flex;flex-direction:column;gap:8px}
 .qa-item{border:1.5px solid var(--border);border-radius:10px;overflow:hidden}
-.qa-q{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;background:var(--amber-light);font-size:.88rem;font-weight:600;color:#7a5000;user-select:none;transition:background .15s}
+.qa-q{display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;background:var(--amber-light);font-size:.86rem;font-weight:600;color:#7a5000;user-select:none;transition:background .15s}
 .qa-q:hover{background:#fef3c7}
-.qa-q::after{content:'▼';margin-left:auto;font-size:.7rem;color:var(--amber);transition:transform .2s}
+.qa-q::after{content:'▼';margin-left:auto;font-size:.68rem;color:var(--amber);transition:transform .2s}
 .qa-item.open .qa-q::after{transform:rotate(180deg)}
-.qa-num{width:24px;height:24px;border-radius:50%;background:var(--amber);color:#fff;font-size:.75rem;font-weight:700;flex-shrink:0;display:flex;align-items:center;justify-content:center}
-.qa-a{display:none;padding:12px 14px;background:#fffcf5;border-top:1px solid #fde68a;font-size:.85rem;color:#1a3a1a;line-height:1.6}
+.qa-num{width:24px;height:24px;border-radius:50%;background:var(--amber);color:#fff;font-size:.73rem;font-weight:700;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.qa-a{display:none;padding:11px 14px;background:#fffcf5;border-top:1px solid #fde68a;font-size:.84rem;color:#1a3a1a;line-height:1.6}
 .qa-item.open .qa-a{display:block}
 .qa-a strong{color:var(--green)}
 
 /* GAME */
 .game-box{margin:12px 0;border:2px solid var(--border);border-radius:12px;overflow:hidden}
 .game-header{background:linear-gradient(135deg,#064e3b,var(--green));color:#fff;padding:14px 18px;display:flex;align-items:center;justify-content:space-between}
-.game-header .game-title{font-size:.95rem;font-weight:700}
-.game-progress{font-size:.8rem;opacity:.85}
-.progress-bar-wrap{height:6px;background:rgba(255,255,255,.2)}
-.progress-bar{height:6px;background:#6ee7b7;border-radius:3px;transition:width .3s}
-.game-body{padding:20px 18px}
-.quiz-q{font-size:.92rem;font-weight:600;color:var(--blue-dark);margin-bottom:14px;line-height:1.5}
-.quiz-opts{display:flex;flex-direction:column;gap:8px}
-.quiz-opt{display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:.85rem;background:#fff;transition:all .15s;user-select:none}
+.game-title{font-size:.92rem;font-weight:700}
+.game-progress{font-size:.78rem;opacity:.85}
+.progress-bar-wrap{height:5px;background:rgba(255,255,255,.2)}
+.progress-bar{height:5px;background:#6ee7b7;border-radius:3px;transition:width .3s}
+.game-body{padding:18px}
+.quiz-q{font-size:.9rem;font-weight:600;color:var(--blue-dark);margin-bottom:14px;line-height:1.5}
+.quiz-opts{display:flex;flex-direction:column;gap:7px}
+.quiz-opt{display:flex;align-items:center;gap:10px;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:.83rem;background:#fff;transition:all .15s;user-select:none}
 .quiz-opt:hover:not(.disabled){background:var(--green-light);border-color:var(--green)}
-.quiz-opt .opt-letter{width:26px;height:26px;border-radius:50%;background:var(--green-light);color:var(--green);font-weight:700;font-size:.8rem;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--green)}
+.opt-letter{width:26px;height:26px;border-radius:50%;background:var(--green-light);color:var(--green);font-weight:700;font-size:.78rem;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--green)}
 .quiz-opt.correct{background:#dcfce7;border-color:var(--green)}
-.quiz-opt.correct .opt-letter{background:var(--green);color:#fff;border-color:var(--green)}
+.quiz-opt.correct .opt-letter{background:var(--green);color:#fff}
 .quiz-opt.wrong{background:#fee2e2;border-color:var(--red)}
 .quiz-opt.wrong .opt-letter{background:var(--red);color:#fff;border-color:var(--red)}
 .quiz-opt.disabled{cursor:default;opacity:.7}
-.quiz-explain{margin-top:12px;padding:10px 12px;background:var(--amber-light);border-left:3px solid var(--amber);border-radius:0 8px 8px 0;font-size:.82rem;color:#7a5000;display:none}
+.quiz-explain{margin-top:12px;padding:10px 12px;background:var(--amber-light);border-left:3px solid var(--amber);border-radius:0 8px 8px 0;font-size:.8rem;color:#7a5000;display:none}
 .quiz-explain.show{display:block}
-.quiz-next{margin-top:14px;padding:9px 22px;background:var(--green);color:#fff;border:none;border-radius:20px;font-size:.85rem;font-weight:600;cursor:pointer;display:none;transition:background .15s}
+.quiz-next{margin-top:12px;padding:9px 22px;background:var(--green);color:#fff;border:none;border-radius:20px;font-size:.83rem;font-weight:600;cursor:pointer;display:none;transition:background .15s}
 .quiz-next:hover{background:#047857}
 .quiz-next.show{display:inline-flex;align-items:center;gap:6px}
 .game-score{padding:24px;text-align:center;display:none}
 .game-score.show{display:block}
 .score-emoji{font-size:3rem;margin-bottom:10px}
-.score-text{font-size:1.1rem;font-weight:700;color:var(--blue-dark);margin-bottom:6px}
-.score-sub{font-size:.85rem;color:#667;margin-bottom:16px}
-.score-stars{font-size:1.5rem;letter-spacing:4px;margin-bottom:16px}
-.btn-replay{padding:10px 28px;background:var(--green);color:#fff;border:none;border-radius:20px;font-size:.88rem;font-weight:600;cursor:pointer;transition:background .15s}
+.score-text{font-size:1.05rem;font-weight:700;color:var(--blue-dark);margin-bottom:6px}
+.score-sub{font-size:.83rem;color:#667;margin-bottom:16px}
+.score-stars{font-size:1.4rem;letter-spacing:4px;margin-bottom:16px}
+.btn-replay{padding:10px 28px;background:var(--green);color:#fff;border:none;border-radius:20px;font-size:.86rem;font-weight:600;cursor:pointer;transition:background .15s}
 .btn-replay:hover{background:#047857}
 
 /* LIGHTBOX */
-.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:2000;align-items:center;justify-content:center}
+.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:2000;align-items:center;justify-content:center}
 .lightbox.open{display:flex}
-.lightbox img{max-width:95vw;max-height:92vh;border-radius:6px;box-shadow:0 4px 32px rgba(0,0,0,.5)}
+.lightbox img{max-width:95vw;max-height:92vh;border-radius:6px}
 .lightbox-close{position:fixed;top:16px;right:20px;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:1.8rem;cursor:pointer;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center}
 
-footer{text-align:center;font-size:.78rem;color:#89a;padding:20px}
+footer{text-align:center;font-size:.75rem;color:#89a;padding:20px}
 </style>
 </head>
 <body>
 
+<!-- HEADER -->
 <header>
-  <div class="header-inner">
-    <div class="vnpt-logo">VNPT</div>
-    <div class="header-text">
-      <h1>Hướng dẫn Lập Hợp đồng — Camera & Mesh Wifi</h1>
-      <p>Hệ thống OneBSS · Tài liệu đào tạo nội bộ · Liên hệ hỗ trợ: <strong style="color:#7df">18001166</strong> nhánh 2</p>
-    </div>
+  <div class="vnpt-logo">VNPT</div>
+  <div class="hdr-text">
+    <h1>Hướng dẫn Lập Hợp đồng — Camera & Mesh Wifi</h1>
+    <p>Hệ thống OneBSS · Đào tạo nội bộ · <strong style="color:#7de8ff">18001166</strong> nhánh 2</p>
   </div>
 </header>
 
-<div class="container">
-  <div class="grid">
-    <div class="card" onclick="openModal('m1')"><div class="card-icon">💰</div><div class="card-body"><div class="card-title">Chính sách bán hàng</div><div class="card-desc">Bảng giá các gói Camera Indoor, Outdoor, Cloud và ưu tiên tư vấn gói 7 tháng.</div><button class="card-btn">Học ngay</button></div></div>
-    <div class="card" onclick="openModal('m2')"><div class="card-icon">📋</div><div class="card-body"><div class="card-title">Tab F2 — Thông tin khách hàng</div><div class="card-desc">Hướng dẫn điền đúng các trường thông tin khách hàng trước khi sang Tab F3.</div><button class="card-btn">Học ngay</button></div></div>
-    <div class="card" onclick="openModal('m3')"><div class="card-icon">📷</div><div class="card-body"><div class="card-title">Camera Indoor / Outdoor + Thẻ 64G</div><div class="card-desc">Quy trình lập HĐ Camera với thẻ nhớ 64GB. Gói 1 tháng, 7 tháng và trả sau.</div><button class="card-btn">Học ngay</button></div></div>
-    <div class="card" onclick="openModal('m4')"><div class="card-icon">☁️</div><div class="card-body"><div class="card-title">Camera Outdoor + Cloud</div><div class="card-desc">Lập HĐ 2 thuê bao: Camera Outdoor PT + Home Cloud camera, ghép gói Cloud 7.</div><button class="card-btn">Học ngay</button></div></div>
-    <div class="card" onclick="openModal('m5')"><div class="card-icon">🌐</div><div class="card-body"><div class="card-title">Mesh Wifi (Mesh 6 & Pack 2 Mesh 5)</div><div class="card-desc">Lập HĐ Wifi Mesh 6 và ghép gói Pack2_M5 (2 thiết bị Mesh 5, 30k VAT).</div><button class="card-btn">Học ngay</button></div></div>
-    <div class="card" onclick="openModal('m6')"><div class="card-icon">📦</div><div class="card-body"><div class="card-title">Pack 03 CAM</div><div class="card-desc">Gói 3 Camera Indoor + 3 Cloud 3 ngày. Đặt cọc 480,000đ / 6 tháng — 11 bước thao tác.</div><button class="card-btn">Học ngay</button></div></div>
+<!-- HERO: Video quảng bá -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge">VNPT · Tài liệu đào tạo nội bộ</div>
+      <h1 class="hero-title">Hướng dẫn<br>Lập Hợp Đồng<br>Camera & Mesh Wifi</h1>
+      <p class="hero-sub">Hướng dẫn từng bước trên hệ thống <strong>OneBSS</strong><br>dành cho nhân viên kinh doanh VNPT</p>
+      <div class="hero-contact">📞 Hỗ trợ kỹ thuật: <strong>18001166</strong> nhánh 2</div>
+    </div>
+    <div class="hero-vid">
+      <div class="embed-wrap">
+        <iframe src="https://drive.google.com/file/d/1LIv65jXFyp6GYPLSgv0Y2nl6lZBk7pka/preview"
+                allow="autoplay" allowfullscreen></iframe>
+      </div>
+      <p class="embed-cap">▶ Video quảng bá sản phẩm Camera VNPT</p>
+    </div>
   </div>
-</div>
+</section>
 
-<!-- helper: tab buttons -->
-<template id="tpl-tabs">__TABS__</template>
+<!-- MODULES -->
+<section class="modules">
+  <div class="sec-head">Chọn học phần để bắt đầu</div>
+  <div class="grid">
 
-<!-- ===== M1 ===== -->
+    <!-- M1 -->
+    <div class="card">
+      <div class="card-hdr">
+        <div class="card-ico">💰</div>
+        <div class="card-hdr-txt">
+          <div class="card-num">Học phần 01</div>
+          <div class="card-title">Chính sách bán hàng</div>
+        </div>
+      </div>
+      <div class="card-desc">Bảng giá các gói Camera Indoor, Outdoor, Cloud và ưu tiên tư vấn gói 7 tháng. Quy trình 9 bước xử lý HĐ.</div>
+      <div class="card-actions">
+        <button class="act learn" onclick="openModal('m1','learn')"><span class="ai">📚</span>Học</button>
+        <button class="act qa" onclick="openModal('m1','qa')"><span class="ai">✍️</span>Ôn tập</button>
+        <button class="act game" onclick="openModal('m1','game')"><span class="ai">🎮</span>Trò chơi</button>
+      </div>
+    </div>
+
+    <!-- M2 -->
+    <div class="card">
+      <div class="card-hdr">
+        <div class="card-ico">📋</div>
+        <div class="card-hdr-txt">
+          <div class="card-num">Học phần 02</div>
+          <div class="card-title">Tab F2 — Thông tin KH</div>
+        </div>
+      </div>
+      <div class="card-desc">Hướng dẫn điền đúng các trường thông tin khách hàng trước khi sang Tab F3.</div>
+      <div class="card-actions">
+        <button class="act learn" onclick="openModal('m2','learn')"><span class="ai">📚</span>Học</button>
+        <button class="act qa" onclick="openModal('m2','qa')"><span class="ai">✍️</span>Ôn tập</button>
+        <button class="act game" onclick="openModal('m2','game')"><span class="ai">🎮</span>Trò chơi</button>
+      </div>
+    </div>
+
+    <!-- M3 -->
+    <div class="card">
+      <div class="card-hdr">
+        <div class="card-ico">📷</div>
+        <div class="card-hdr-txt">
+          <div class="card-num">Học phần 03</div>
+          <div class="card-title">Camera + Thẻ 64G</div>
+        </div>
+      </div>
+      <div class="card-desc">Quy trình lập HĐ Camera Indoor/Outdoor với thẻ nhớ 64GB. Gói 1 tháng, 7 tháng và trả sau.</div>
+      <div class="card-actions">
+        <button class="act learn" onclick="openModal('m3','learn')"><span class="ai">📚</span>Học</button>
+        <button class="act qa" onclick="openModal('m3','qa')"><span class="ai">✍️</span>Ôn tập</button>
+        <button class="act game" onclick="openModal('m3','game')"><span class="ai">🎮</span>Trò chơi</button>
+      </div>
+    </div>
+
+    <!-- M4 -->
+    <div class="card">
+      <div class="card-hdr">
+        <div class="card-ico">☁️</div>
+        <div class="card-hdr-txt">
+          <div class="card-num">Học phần 04</div>
+          <div class="card-title">Camera Outdoor + Cloud</div>
+        </div>
+      </div>
+      <div class="card-desc">Lập HĐ 2 thuê bao: Camera Outdoor PT + Home Cloud Camera. Ghép gói Cloud 7.</div>
+      <div class="card-actions">
+        <button class="act learn" onclick="openModal('m4','learn')"><span class="ai">📚</span>Học</button>
+        <button class="act qa" onclick="openModal('m4','qa')"><span class="ai">✍️</span>Ôn tập</button>
+        <button class="act game" onclick="openModal('m4','game')"><span class="ai">🎮</span>Trò chơi</button>
+      </div>
+    </div>
+
+    <!-- M5 -->
+    <div class="card">
+      <div class="card-hdr">
+        <div class="card-ico">🌐</div>
+        <div class="card-hdr-txt">
+          <div class="card-num">Học phần 05</div>
+          <div class="card-title">Mesh Wifi</div>
+        </div>
+      </div>
+      <div class="card-desc">Lập HĐ Wifi Mesh 6 và ghép gói Pack2_M5 (2 thiết bị Mesh 5, tiết kiệm 30,000đ VAT).</div>
+      <div class="card-actions">
+        <button class="act learn" onclick="openModal('m5','learn')"><span class="ai">📚</span>Học</button>
+        <button class="act qa" onclick="openModal('m5','qa')"><span class="ai">✍️</span>Ôn tập</button>
+        <button class="act game" onclick="openModal('m5','game')"><span class="ai">🎮</span>Trò chơi</button>
+      </div>
+    </div>
+
+    <!-- M6 -->
+    <div class="card">
+      <div class="card-hdr">
+        <div class="card-ico">📦</div>
+        <div class="card-hdr-txt">
+          <div class="card-num">Học phần 06</div>
+          <div class="card-title">Pack 03 CAM</div>
+        </div>
+      </div>
+      <div class="card-desc">Gói 3 Camera Indoor + 3 Cloud 3 ngày. Đặt cọc 480,000đ / 6 tháng — 11 bước thao tác.</div>
+      <div class="card-actions">
+        <button class="act learn" onclick="openModal('m6','learn')"><span class="ai">📚</span>Học</button>
+        <button class="act qa" onclick="openModal('m6','qa')"><span class="ai">✍️</span>Ôn tập</button>
+        <button class="act game" onclick="openModal('m6','game')"><span class="ai">🎮</span>Trò chơi</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== M1 MODAL ===== -->
 <div class="overlay" id="m1"><div class="modal">
   <div class="modal-head"><span class="icon">💰</span><h2>Chính sách bán hàng</h2><button class="modal-close" onclick="closeModal('m1')">✕</button></div>
   <div class="modal-tabs">
@@ -271,7 +382,7 @@ footer{text-align:center;font-size:.78rem;color:#89a;padding:20px}
   <div class="tab-panel" id="m1-game"><div class="game-box" id="game-m1"></div></div>
 </div></div>
 
-<!-- ===== M2 ===== -->
+<!-- ===== M2 MODAL ===== -->
 <div class="overlay" id="m2"><div class="modal">
   <div class="modal-head"><span class="icon">📋</span><h2>Tab F2 — Thông tin khách hàng</h2><button class="modal-close" onclick="closeModal('m2')">✕</button></div>
   <div class="modal-tabs">
@@ -314,7 +425,7 @@ footer{text-align:center;font-size:.78rem;color:#89a;padding:20px}
   <div class="tab-panel" id="m2-game"><div class="game-box" id="game-m2"></div></div>
 </div></div>
 
-<!-- ===== M3 ===== -->
+<!-- ===== M3 MODAL ===== -->
 <div class="overlay" id="m3"><div class="modal">
   <div class="modal-head"><span class="icon">📷</span><h2>Camera Indoor / Outdoor + Thẻ nhớ 64G</h2><button class="modal-close" onclick="closeModal('m3')">✕</button></div>
   <div class="modal-tabs">
@@ -373,7 +484,7 @@ footer{text-align:center;font-size:.78rem;color:#89a;padding:20px}
   <div class="tab-panel" id="m3-game"><div class="game-box" id="game-m3"></div></div>
 </div></div>
 
-<!-- ===== M4 ===== -->
+<!-- ===== M4 MODAL ===== -->
 <div class="overlay" id="m4"><div class="modal">
   <div class="modal-head"><span class="icon">☁️</span><h2>Camera Outdoor + Cloud</h2><button class="modal-close" onclick="closeModal('m4')">✕</button></div>
   <div class="modal-tabs">
@@ -436,7 +547,7 @@ footer{text-align:center;font-size:.78rem;color:#89a;padding:20px}
   <div class="tab-panel" id="m4-game"><div class="game-box" id="game-m4"></div></div>
 </div></div>
 
-<!-- ===== M5 ===== -->
+<!-- ===== M5 MODAL ===== -->
 <div class="overlay" id="m5"><div class="modal">
   <div class="modal-head"><span class="icon">🌐</span><h2>Mesh Wifi — Mesh 6 & Pack 2 Mesh 5</h2><button class="modal-close" onclick="closeModal('m5')">✕</button></div>
   <div class="modal-tabs">
@@ -478,14 +589,14 @@ footer{text-align:center;font-size:.78rem;color:#89a;padding:20px}
         <div class="video-thumb"><div class="play-circle">▶</div><span class="drive-badge">Drive</span></div>
         <div class="video-info"><div class="vname">09 — Mesh 6</div><div class="vdesc">Gói 7 tháng</div><div class="vopen">▸ Xem trên Google Drive</div></div>
       </a></div>
-      <div class="video-card no-link">
-        <div class="video-thumb"><div class="play-circle">▶</div></div>
-        <div class="video-info"><div class="vname">10 — Mesh 5 Trả sau</div><div class="vdesc">Bao gồm hủy HĐ</div></div>
-      </div>
-      <div class="video-card no-link">
-        <div class="video-thumb"><div class="play-circle">▶</div></div>
-        <div class="video-info"><div class="vname">11 — Pack 2 Mesh 5</div><div class="vdesc">Gói 7 tháng</div></div>
-      </div>
+      <div class="video-card"><a class="video-link" href="https://drive.google.com/file/d/1MwdX-12YA8DAtb56frb_w6QtPo49lSo9/view" target="_blank" rel="noopener">
+        <div class="video-thumb"><div class="play-circle">▶</div><span class="drive-badge">Drive</span></div>
+        <div class="video-info"><div class="vname">10 — Mesh 5 Trả sau</div><div class="vdesc">Bao gồm hủy HĐ</div><div class="vopen">▸ Xem trên Google Drive</div></div>
+      </a></div>
+      <div class="video-card"><a class="video-link" href="https://drive.google.com/file/d/1g1Qx7lThrJ8QdMCLsk_GDxtxegrp_O/view" target="_blank" rel="noopener">
+        <div class="video-thumb"><div class="play-circle">▶</div><span class="drive-badge">Drive</span></div>
+        <div class="video-info"><div class="vname">11 — Pack 2 Mesh 5</div><div class="vdesc">Gói 7 tháng</div><div class="vopen">▸ Xem trên Google Drive</div></div>
+      </a></div>
     </div>
   </div>
   <div class="tab-panel" id="m5-qa">
@@ -500,7 +611,7 @@ footer{text-align:center;font-size:.78rem;color:#89a;padding:20px}
   <div class="tab-panel" id="m5-game"><div class="game-box" id="game-m5"></div></div>
 </div></div>
 
-<!-- ===== M6 ===== -->
+<!-- ===== M6 MODAL ===== -->
 <div class="overlay" id="m6"><div class="modal">
   <div class="modal-head"><span class="icon">📦</span><h2>Pack 03 CAM — 3 Camera Indoor + 3 Cloud 3 ngày</h2><button class="modal-close" onclick="closeModal('m6')">✕</button></div>
   <div class="modal-tabs">
@@ -530,6 +641,13 @@ footer{text-align:center;font-size:.78rem;color:#89a;padding:20px}
       <div class="img-item" onclick="lightbox(this)"><img src="" data-src="Pack 03 CAM/Pack 03 CAM - Tab F3 - 2.png" alt="B2" loading="lazy"/><div class="img-caption">Bước 2 — Home Cloud Camera thứ 1</div></div>
       <div class="img-item" onclick="lightbox(this)"><img src="" data-src="Pack 03 CAM/Pack 03 CAM - Tab F3 - 5.png" alt="B5" loading="lazy"/><div class="img-caption">Bước 7 — Ghép gói Pack 03 Cam</div></div>
       <div class="img-item" onclick="lightbox(this)"><img src="" data-src="Pack 03 CAM/Pack 03 CAM - Tab F3 - 11.png" alt="B11" loading="lazy"/><div class="img-caption">Bước 11 — Thanh toán HĐ</div></div>
+    </div>
+    <h3>Video hướng dẫn</h3>
+    <div class="video-list">
+      <div class="video-card"><a class="video-link" href="https://drive.google.com/file/d/1cNsXdsfUza6DoIxGxUlMArEXujlP-ts-/view" target="_blank" rel="noopener">
+        <div class="video-thumb"><div class="play-circle">▶</div><span class="drive-badge">Drive</span></div>
+        <div class="video-info"><div class="vname">Pack 03 CAM — Hướng dẫn thao tác</div><div class="vdesc">Toàn bộ 11 bước thực hiện</div><div class="vopen">▸ Xem trên Google Drive</div></div>
+      </a></div>
     </div>
   </div>
   <div class="tab-panel" id="m6-qa">
@@ -668,7 +786,8 @@ function switchTab(mid,tab){
   if(tab==='game')buildGame(mid);
 }
 
-function openModal(id){
+function openModal(id,tab='learn'){
+  switchTab(id,tab);
   document.getElementById(id).classList.add('open');
   document.body.style.overflow='hidden';
   document.getElementById(id).querySelectorAll('img[data-src]').forEach(resolveSrc);
