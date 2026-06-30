@@ -10,7 +10,9 @@
   --blue-light:#E3F0FB;--accent:#00A0E3;--white:#fff;
   --gray:#f4f7fc;--text:#1a2a3a;--border:#d0e3f5;
   --shadow:0 4px 20px rgba(0,87,168,.13);
-  --green:#16a34a;--red:#dc2626;--yellow:#ca8a04;
+  --green:#059669;--green-light:#ECFDF5;
+  --amber:#D97706;--amber-light:#FFFBEB;
+  --red:#dc2626;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',Arial,sans-serif;background:var(--gray);color:var(--text);min-height:100vh}
@@ -49,11 +51,30 @@ header{background:linear-gradient(135deg,var(--blue-dark) 0%,var(--blue-mid) 100
 .modal-close{margin-left:auto;background:rgba(255,255,255,.2);border:none;color:var(--white);width:32px;height:32px;border-radius:50%;font-size:1.2rem;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:background .15s}
 .modal-close:hover{background:rgba(255,255,255,.35)}
 
-/* TABS */
-.modal-tabs{display:flex;border-bottom:2px solid var(--border);background:#f8fafd}
-.tab-btn{flex:1;padding:12px 8px;border:none;background:none;cursor:pointer;font-size:.85rem;font-weight:600;color:#667;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .15s}
-.tab-btn.active{color:var(--blue);border-bottom-color:var(--blue);background:var(--white)}
-.tab-btn:hover:not(.active){background:#eef4ff;color:var(--blue-mid)}
+/* ===== ICON TABS ===== */
+.modal-tabs{display:flex;gap:10px;padding:14px 16px;background:#f0f5fc;border-bottom:1px solid var(--border)}
+.tab-btn{
+  flex:1;display:flex;flex-direction:column;align-items:center;
+  gap:5px;padding:12px 6px 10px;
+  border-radius:12px;border:2px solid #dde8f5;
+  background:var(--white);cursor:pointer;
+  transition:all .18s;
+  box-shadow:0 2px 8px rgba(0,87,168,.07);
+  color:#667;
+}
+.tab-btn:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,87,168,.15)}
+.tab-btn .t-icon{font-size:1.7rem;line-height:1}
+.tab-btn .t-label{font-size:.78rem;font-weight:700;letter-spacing:.3px}
+/* Học — blue */
+.tab-btn.t-learn.active{background:var(--blue-light);border-color:var(--blue);color:var(--blue)}
+.tab-btn.t-learn:hover{border-color:var(--blue)}
+/* Ôn tập — amber */
+.tab-btn.t-qa.active{background:var(--amber-light);border-color:var(--amber);color:var(--amber)}
+.tab-btn.t-qa:hover{border-color:var(--amber)}
+/* Trò chơi — green */
+.tab-btn.t-game.active{background:var(--green-light);border-color:var(--green);color:var(--green)}
+.tab-btn.t-game:hover{border-color:var(--green)}
+
 .tab-panel{display:none;padding:24px;max-height:70vh;overflow-y:auto}
 .tab-panel.active{display:block}
 
@@ -84,102 +105,90 @@ tr:hover td{background:#eef4ff}
 /* VIDEO CARDS */
 .video-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:12px 0}
 @media(max-width:500px){.video-list{grid-template-columns:1fr}}
-.video-card{background:var(--blue-light);border:1px solid var(--border);border-radius:10px;padding:12px 14px;display:flex;align-items:flex-start;gap:10px}
-.video-card .play{width:36px;height:36px;border-radius:50%;background:var(--blue);color:var(--white);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.95rem}
-.video-card .vname{font-size:.82rem;font-weight:600;color:var(--blue-dark);line-height:1.4}
-.video-card .vdesc{font-size:.75rem;color:#557;margin-top:2px}
+.video-card{
+  background:var(--blue-light);border:1.5px solid var(--border);
+  border-radius:10px;padding:0;overflow:hidden;
+  transition:box-shadow .15s,transform .15s;
+  display:flex;flex-direction:column;
+}
+.video-card:hover{box-shadow:0 4px 16px rgba(0,87,168,.18);transform:translateY(-2px)}
+a.video-link{text-decoration:none;color:inherit;display:flex;flex-direction:column;height:100%}
+.video-thumb{
+  background:linear-gradient(135deg,var(--blue-dark) 0%,var(--blue-mid) 100%);
+  height:64px;display:flex;align-items:center;justify-content:center;gap:10px;
+  position:relative;
+}
+.video-thumb .play-circle{
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(255,255,255,.9);color:var(--blue-dark);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;flex-shrink:0;
+  box-shadow:0 2px 8px rgba(0,0,0,.2);
+}
+.video-thumb .drive-badge{
+  position:absolute;top:6px;right:8px;
+  background:rgba(255,255,255,.85);border-radius:4px;
+  padding:1px 5px;font-size:.65rem;font-weight:700;color:#1a73e8;
+}
+.video-info{padding:10px 12px;flex:1}
+.video-info .vname{font-size:.82rem;font-weight:700;color:var(--blue-dark);line-height:1.4}
+.video-info .vdesc{font-size:.74rem;color:#557;margin-top:2px}
+.video-info .vopen{font-size:.72rem;color:var(--blue);margin-top:4px;font-weight:600}
+/* No-link video card */
+.video-card.no-link{opacity:.75}
+.video-card.no-link .video-thumb{background:linear-gradient(135deg,#6b7280,#9ca3af)}
 
 /* STEPS */
-.steps{counter-reset:step;margin:12px 0}
+.steps{margin:12px 0}
 .step{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid #eef}
 .step:last-child{border-bottom:none}
 .step-num{width:28px;height:28px;border-radius:50%;background:var(--blue);color:var(--white);font-size:.8rem;font-weight:700;flex-shrink:0;display:flex;align-items:center;justify-content:center}
 .step-content{font-size:.85rem;line-height:1.6}
 .step-content strong{color:var(--blue-dark)}
 
-/* ===== CÂU HỎI ÔN TẬP ===== */
+/* Q&A */
 .qa-list{margin:12px 0;display:flex;flex-direction:column;gap:8px}
 .qa-item{border:1.5px solid var(--border);border-radius:10px;overflow:hidden}
-.qa-q{
-  display:flex;align-items:center;gap:10px;
-  padding:12px 14px;cursor:pointer;
-  background:#f0f6ff;font-size:.88rem;font-weight:600;color:var(--blue-dark);
-  user-select:none;transition:background .15s;
-}
-.qa-q:hover{background:#dceeff}
-.qa-q::after{content:'▼';margin-left:auto;font-size:.7rem;color:var(--blue);transition:transform .2s}
+.qa-q{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;background:var(--amber-light);font-size:.88rem;font-weight:600;color:#7a5000;user-select:none;transition:background .15s}
+.qa-q:hover{background:#fef3c7}
+.qa-q::after{content:'▼';margin-left:auto;font-size:.7rem;color:var(--amber);transition:transform .2s}
 .qa-item.open .qa-q::after{transform:rotate(180deg)}
-.qa-num{
-  width:24px;height:24px;border-radius:50%;
-  background:var(--blue);color:#fff;
-  font-size:.75rem;font-weight:700;flex-shrink:0;
-  display:flex;align-items:center;justify-content:center;
-}
-.qa-a{
-  display:none;padding:12px 14px;
-  background:#f7fbff;border-top:1px solid var(--border);
-  font-size:.85rem;color:#1a3a1a;line-height:1.6;
-}
+.qa-num{width:24px;height:24px;border-radius:50%;background:var(--amber);color:#fff;font-size:.75rem;font-weight:700;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.qa-a{display:none;padding:12px 14px;background:#fffcf5;border-top:1px solid #fde68a;font-size:.85rem;color:#1a3a1a;line-height:1.6}
 .qa-item.open .qa-a{display:block}
 .qa-a strong{color:var(--green)}
 
-/* ===== GAME ÔN LUYỆN ===== */
+/* GAME */
 .game-box{margin:12px 0;border:2px solid var(--border);border-radius:12px;overflow:hidden}
-.game-header{
-  background:linear-gradient(135deg,#1e3a5f,var(--blue-mid));
-  color:#fff;padding:14px 18px;
-  display:flex;align-items:center;justify-content:space-between;
-}
+.game-header{background:linear-gradient(135deg,#064e3b,var(--green));color:#fff;padding:14px 18px;display:flex;align-items:center;justify-content:space-between}
 .game-header .game-title{font-size:.95rem;font-weight:700}
 .game-progress{font-size:.8rem;opacity:.85}
-.progress-bar-wrap{height:6px;background:rgba(255,255,255,.2);margin:0 18px 0}
-.progress-bar{height:6px;background:#7dd3fc;border-radius:3px;transition:width .3s}
+.progress-bar-wrap{height:6px;background:rgba(255,255,255,.2)}
+.progress-bar{height:6px;background:#6ee7b7;border-radius:3px;transition:width .3s}
 .game-body{padding:20px 18px}
 .quiz-q{font-size:.92rem;font-weight:600;color:var(--blue-dark);margin-bottom:14px;line-height:1.5}
 .quiz-opts{display:flex;flex-direction:column;gap:8px}
-.quiz-opt{
-  display:flex;align-items:center;gap:10px;
-  padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;
-  cursor:pointer;font-size:.85rem;background:#fff;
-  transition:all .15s;user-select:none;
-}
-.quiz-opt:hover:not(.disabled){background:var(--blue-light);border-color:var(--blue)}
-.quiz-opt .opt-letter{
-  width:26px;height:26px;border-radius:50%;
-  background:var(--blue-light);color:var(--blue);
-  font-weight:700;font-size:.8rem;flex-shrink:0;
-  display:flex;align-items:center;justify-content:center;
-  border:1.5px solid var(--blue);
-}
+.quiz-opt{display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:.85rem;background:#fff;transition:all .15s;user-select:none}
+.quiz-opt:hover:not(.disabled){background:var(--green-light);border-color:var(--green)}
+.quiz-opt .opt-letter{width:26px;height:26px;border-radius:50%;background:var(--green-light);color:var(--green);font-weight:700;font-size:.8rem;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--green)}
 .quiz-opt.correct{background:#dcfce7;border-color:var(--green)}
 .quiz-opt.correct .opt-letter{background:var(--green);color:#fff;border-color:var(--green)}
 .quiz-opt.wrong{background:#fee2e2;border-color:var(--red)}
 .quiz-opt.wrong .opt-letter{background:var(--red);color:#fff;border-color:var(--red)}
 .quiz-opt.disabled{cursor:default;opacity:.7}
-.quiz-explain{margin-top:12px;padding:10px 12px;background:#fffbeb;border-left:3px solid #f59e0b;border-radius:0 8px 8px 0;font-size:.82rem;color:#7a5000;display:none}
+.quiz-explain{margin-top:12px;padding:10px 12px;background:var(--amber-light);border-left:3px solid var(--amber);border-radius:0 8px 8px 0;font-size:.82rem;color:#7a5000;display:none}
 .quiz-explain.show{display:block}
-.quiz-next{
-  margin-top:14px;padding:9px 22px;
-  background:var(--blue);color:#fff;border:none;
-  border-radius:20px;font-size:.85rem;font-weight:600;
-  cursor:pointer;display:none;transition:background .15s;
-}
-.quiz-next:hover{background:var(--blue-dark)}
+.quiz-next{margin-top:14px;padding:9px 22px;background:var(--green);color:#fff;border:none;border-radius:20px;font-size:.85rem;font-weight:600;cursor:pointer;display:none;transition:background .15s}
+.quiz-next:hover{background:#047857}
 .quiz-next.show{display:inline-flex;align-items:center;gap:6px}
-.game-score{
-  padding:24px;text-align:center;display:none;
-}
+.game-score{padding:24px;text-align:center;display:none}
 .game-score.show{display:block}
 .score-emoji{font-size:3rem;margin-bottom:10px}
 .score-text{font-size:1.1rem;font-weight:700;color:var(--blue-dark);margin-bottom:6px}
 .score-sub{font-size:.85rem;color:#667;margin-bottom:16px}
 .score-stars{font-size:1.5rem;letter-spacing:4px;margin-bottom:16px}
-.btn-replay{
-  padding:10px 28px;background:var(--blue);color:#fff;
-  border:none;border-radius:20px;font-size:.88rem;
-  font-weight:600;cursor:pointer;transition:background .15s;
-}
-.btn-replay:hover{background:var(--blue-dark)}
+.btn-replay{padding:10px 28px;background:var(--green);color:#fff;border:none;border-radius:20px;font-size:.88rem;font-weight:600;cursor:pointer;transition:background .15s}
+.btn-replay:hover{background:#047857}
 
 /* LIGHTBOX */
 .lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:2000;align-items:center;justify-content:center}
@@ -213,19 +222,21 @@ footer{text-align:center;font-size:.78rem;color:#89a;padding:20px}
   </div>
 </div>
 
-<!-- ===== MODAL M1: CHÍNH SÁCH BÁN HÀNG ===== -->
-<div class="overlay" id="m1">
-<div class="modal">
+<!-- helper: tab buttons -->
+<template id="tpl-tabs">__TABS__</template>
+
+<!-- ===== M1 ===== -->
+<div class="overlay" id="m1"><div class="modal">
   <div class="modal-head"><span class="icon">💰</span><h2>Chính sách bán hàng</h2><button class="modal-close" onclick="closeModal('m1')">✕</button></div>
   <div class="modal-tabs">
-    <button class="tab-btn active" onclick="switchTab('m1','learn')">📖 Nội dung</button>
-    <button class="tab-btn" onclick="switchTab('m1','qa')">📝 Câu hỏi Ôn tập</button>
-    <button class="tab-btn" onclick="switchTab('m1','game')">🎮 Game Ôn luyện</button>
+    <button class="tab-btn t-learn active" onclick="switchTab('m1','learn')"><span class="t-icon">📚</span><span class="t-label">Học</span></button>
+    <button class="tab-btn t-qa" onclick="switchTab('m1','qa')"><span class="t-icon">✍️</span><span class="t-label">Ôn tập</span></button>
+    <button class="tab-btn t-game" onclick="switchTab('m1','game')"><span class="t-icon">🎮</span><span class="t-label">Trò chơi</span></button>
   </div>
   <div class="tab-panel active" id="m1-learn">
-    <div class="warn">Ưu tiên tư vấn <strong>gói 7 tháng [6+1]</strong>. Trường hợp KH trả hàng tháng: không tích Trả trước, khi Thanh toán chọn <em>Không thu tiền / Nộp tiền sau</em>.</div>
+    <div class="warn">Ưu tiên tư vấn <strong>gói 7 tháng [6+1]</strong>. KH trả hàng tháng: không tích Trả trước, khi Thanh toán chọn <em>Không thu tiền / Nộp tiền sau</em>.</div>
     <h3>Bảng giá các gói Camera</h3>
-    <table><tr><th>Gói dịch vụ</th><th>1 tháng</th><th>6–7 tháng</th></tr>
+    <table><tr><th>Gói dịch vụ</th><th>1 tháng</th><th>TTN</th></tr>
     <tr><td>Camera Indoor + Thẻ 64G</td><td>30,000đ</td><td>646,000đ</td></tr>
     <tr><td>Camera Outdoor + Thẻ 64G</td><td>50,000đ</td><td>946,000đ</td></tr>
     <tr><td>Camera Indoor + Cloud 7</td><td>40,000đ</td><td>❌</td></tr>
@@ -236,52 +247,48 @@ footer{text-align:center;font-size:.78rem;color:#89a;padding:20px}
     <tr><td>Camera Outdoor + Cloud 30</td><td>110,000đ</td><td>❌</td></tr></table>
     <h3>Quy trình xử lý HĐ (9 bước)</h3>
     <div class="steps">
-      <div class="step"><div class="step-num">1</div><div class="step-content"><strong>Lập hợp đồng</strong> → Trạng thái: Mới tiếp nhận</div></div>
-      <div class="step"><div class="step-num">2</div><div class="step-content"><strong>Ghép gói đa dịch vụ</strong> (khi có gói combo)</div></div>
+      <div class="step"><div class="step-num">1</div><div class="step-content"><strong>Lập hợp đồng</strong> → Mới tiếp nhận</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><strong>Ghép gói đa dịch vụ</strong> (khi có combo)</div></div>
       <div class="step"><div class="step-num">3</div><div class="step-content"><strong>Liên hệ</strong></div></div>
       <div class="step"><div class="step-num">4</div><div class="step-content"><strong>Hẹn lắp đặt</strong></div></div>
-      <div class="step"><div class="step-num">5</div><div class="step-content"><strong>Thanh toán</strong> → Trạng thái: Đã thanh toán</div></div>
-      <div class="step"><div class="step-num">6</div><div class="step-content"><strong>Giao phiếu thi công</strong> → Trạng thái: Đã giao thi công</div></div>
-      <div class="step"><div class="step-num">7</div><div class="step-content"><strong>Hủy giao</strong> (hoàn tác bước 6)</div></div>
-      <div class="step"><div class="step-num">8</div><div class="step-content"><strong>Xóa thanh toán</strong> (hoàn tác bước 5)</div></div>
-      <div class="step"><div class="step-num">9</div><div class="step-content"><strong>Sửa / Xóa HĐ</strong> (hoàn tác bước 1)</div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-content"><strong>Thanh toán</strong> → Đã thanh toán</div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-content"><strong>Giao phiếu thi công</strong> → Đã giao thi công</div></div>
+      <div class="step"><div class="step-num">7</div><div class="step-content"><strong>Hủy giao</strong> (hoàn tác 6)</div></div>
+      <div class="step"><div class="step-num">8</div><div class="step-content"><strong>Xóa thanh toán</strong> (hoàn tác 5)</div></div>
+      <div class="step"><div class="step-num">9</div><div class="step-content"><strong>Sửa / Xóa HĐ</strong> (hoàn tác 1)</div></div>
     </div>
   </div>
   <div class="tab-panel" id="m1-qa">
     <div class="qa-list">
-      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">1</span>Camera Indoor + Thẻ 64G gói 7 tháng có giá bao nhiêu?</div><div class="qa-a">✅ <strong>646,000đ</strong> (gói 6+1 tháng khuyến mãi)</div></div>
+      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">1</span>Camera Indoor + Thẻ 64G gói TTN có giá bao nhiêu?</div><div class="qa-a">✅ <strong>646,000đ</strong> (gói 6+1 tháng)</div></div>
       <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">2</span>Camera Outdoor + Thẻ 64G trả 1 tháng giá bao nhiêu?</div><div class="qa-a">✅ <strong>50,000đ / tháng</strong></div></div>
-      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">3</span>Nên ưu tiên tư vấn KH đăng ký gói mấy tháng?</div><div class="qa-a">✅ Ưu tiên tư vấn <strong>gói 7 tháng [6+1]</strong> để KH được hưởng khuyến mãi tháng thứ 7 miễn phí.</div></div>
-      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">4</span>KH đăng ký trả hàng tháng, khi Thanh toán chọn hình thức nào?</div><div class="qa-a">✅ Chọn <strong>Hình thức: Không thu tiền</strong> | <strong>Kênh thu: Nộp tiền sau</strong>. Không tích Trả trước ở Tab F3.</div></div>
-      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">5</span>Quy trình xử lý HĐ trên OneBSS gồm tổng cộng mấy bước?</div><div class="qa-a">✅ <strong>9 bước</strong> (Lập HĐ → Ghép gói → Liên hệ → Hẹn LĐ → Thanh toán → Giao phiếu → và 3 bước hoàn tác)</div></div>
-      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">6</span>Gói Camera Indoor + Cloud 15 có giá 1 tháng là bao nhiêu?</div><div class="qa-a">✅ <strong>60,000đ / tháng</strong></div></div>
+      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">3</span>Nên ưu tiên tư vấn KH đăng ký gói mấy tháng?</div><div class="qa-a">✅ Ưu tiên <strong>gói 7 tháng [6+1]</strong> — tháng thứ 7 miễn phí.</div></div>
+      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">4</span>KH đăng ký trả hàng tháng, khi Thanh toán chọn hình thức nào?</div><div class="qa-a">✅ <strong>Không thu tiền / Nộp tiền sau</strong>. Không tích Trả trước ở F3.</div></div>
+      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">5</span>Quy trình xử lý HĐ trên OneBSS gồm tổng bao nhiêu bước?</div><div class="qa-a">✅ <strong>9 bước</strong></div></div>
+      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">6</span>Camera Indoor + Cloud 15 giá 1 tháng là bao nhiêu?</div><div class="qa-a">✅ <strong>60,000đ / tháng</strong></div></div>
     </div>
   </div>
-  <div class="tab-panel" id="m1-game">
-    <div class="game-box" id="game-m1"></div>
-  </div>
-</div>
-</div>
+  <div class="tab-panel" id="m1-game"><div class="game-box" id="game-m1"></div></div>
+</div></div>
 
-<!-- ===== MODAL M2: TAB F2 ===== -->
-<div class="overlay" id="m2">
-<div class="modal">
+<!-- ===== M2 ===== -->
+<div class="overlay" id="m2"><div class="modal">
   <div class="modal-head"><span class="icon">📋</span><h2>Tab F2 — Thông tin khách hàng</h2><button class="modal-close" onclick="closeModal('m2')">✕</button></div>
   <div class="modal-tabs">
-    <button class="tab-btn active" onclick="switchTab('m2','learn')">📖 Nội dung</button>
-    <button class="tab-btn" onclick="switchTab('m2','qa')">📝 Câu hỏi Ôn tập</button>
-    <button class="tab-btn" onclick="switchTab('m2','game')">🎮 Game Ôn luyện</button>
+    <button class="tab-btn t-learn active" onclick="switchTab('m2','learn')"><span class="t-icon">📚</span><span class="t-label">Học</span></button>
+    <button class="tab-btn t-qa" onclick="switchTab('m2','qa')"><span class="t-icon">✍️</span><span class="t-label">Ôn tập</span></button>
+    <button class="tab-btn t-game" onclick="switchTab('m2','game')"><span class="t-icon">🎮</span><span class="t-label">Trò chơi</span></button>
   </div>
   <div class="tab-panel active" id="m2-learn">
-    <div class="note">Tab F2 áp dụng <strong>chung cho mọi sản phẩm</strong> — điền xong mới chuyển sang Tab F3.</div>
+    <div class="note">Tab F2 áp dụng <strong>chung cho mọi sản phẩm</strong> — điền xong mới chuyển Tab F3.</div>
     <h3>Hướng dẫn điền từng trường</h3>
     <table><tr><th>#</th><th>Trường</th><th>Hướng dẫn</th></tr>
-    <tr><td>①</td><td>Kiểu hợp đồng / PL</td><td>Chọn <strong>Tại nhà</strong></td></tr>
+    <tr><td>①</td><td>Kiểu HĐ / PL</td><td>Chọn <strong>Tại nhà</strong></td></tr>
     <tr><td>②</td><td>Công tác viên</td><td>Nhập <strong>Mã HRM</strong> của mình</td></tr>
     <tr><td>②</td><td>Người giới thiệu</td><td>Nhập <strong>Mã HRM</strong> người giới thiệu</td></tr>
     <tr><td>③</td><td>Địa chỉ KH (*)</td><td><strong>TP → Phường/Xã → Đường → Số nhà</strong></td></tr>
     <tr><td></td><td>Giới tính / Ngày sinh</td><td>Điền đúng thông tin KH</td></tr>
-    <tr><td>④</td><td>Dịch vụ khác</td><td>Tích: <strong>Nhận giấy báo cước qua SMS</strong> và <strong>Email</strong></td></tr>
+    <tr><td>④</td><td>Dịch vụ khác</td><td>Tích: <strong>SMS</strong> và <strong>Email</strong></td></tr>
     <tr><td>⑤</td><td>Email</td><td>Nhập email khách hàng</td></tr></table>
     <h3>Hình ảnh minh họa</h3>
     <div class="img-grid">
@@ -289,32 +296,31 @@ footer{text-align:center;font-size:.78rem;color:#89a;padding:20px}
     </div>
     <h3>Video hướng dẫn</h3>
     <div class="video-list">
-      <div class="video-card"><div class="play">▶</div><div><div class="vname">06 — Lấy mã OTP / Mã xác thực</div><div class="vdesc">Hướng dẫn lấy Smart OTP trên App OneHome</div></div></div>
+      <div class="video-card no-link">
+        <div class="video-thumb"><div class="play-circle">▶</div></div>
+        <div class="video-info"><div class="vname">06 — Lấy mã OTP / Mã xác thực</div><div class="vdesc">Hướng dẫn lấy Smart OTP trên App OneHome</div></div>
+      </div>
     </div>
   </div>
   <div class="tab-panel" id="m2-qa">
     <div class="qa-list">
       <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">1</span>Kiểu hợp đồng / PL phải chọn giá trị nào?</div><div class="qa-a">✅ Chọn <strong>Tại nhà</strong></div></div>
       <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">2</span>Mục Dịch vụ khác cần tích chọn những gì?</div><div class="qa-a">✅ Tích cả hai: <strong>Nhận giấy báo cước qua SMS</strong> và <strong>Nhận giấy báo cước qua Email</strong></div></div>
-      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">3</span>Địa chỉ KH phải định danh theo thứ tự nào?</div><div class="qa-a">✅ <strong>Thành phố → Phường/Xã → Đường → Số nhà</strong> (phải định danh đầy đủ từng cấp)</div></div>
-      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">4</span>Mã xác thực Smart OTP lấy từ đâu?</div><div class="qa-a">✅ Lấy từ ứng dụng <strong>App OneHome</strong> trên điện thoại khách hàng</div></div>
-      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">5</span>Tab F2 áp dụng cho những sản phẩm nào?</div><div class="qa-a">✅ Tab F2 áp dụng <strong>chung cho tất cả sản phẩm</strong> (Mesh, Camera, Cloud…) — bắt buộc hoàn thành trước khi sang F3</div></div>
+      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">3</span>Địa chỉ KH phải định danh theo thứ tự nào?</div><div class="qa-a">✅ <strong>Thành phố → Phường/Xã → Đường → Số nhà</strong></div></div>
+      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">4</span>Mã xác thực Smart OTP lấy từ đâu?</div><div class="qa-a">✅ Từ ứng dụng <strong>App OneHome</strong> trên điện thoại KH</div></div>
+      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">5</span>Tab F2 áp dụng cho những sản phẩm nào?</div><div class="qa-a">✅ <strong>Tất cả sản phẩm</strong> — bắt buộc hoàn thành trước khi sang F3</div></div>
     </div>
   </div>
-  <div class="tab-panel" id="m2-game">
-    <div class="game-box" id="game-m2"></div>
-  </div>
-</div>
-</div>
+  <div class="tab-panel" id="m2-game"><div class="game-box" id="game-m2"></div></div>
+</div></div>
 
-<!-- ===== MODAL M3: CAMERA + THẺ 64G ===== -->
-<div class="overlay" id="m3">
-<div class="modal">
+<!-- ===== M3 ===== -->
+<div class="overlay" id="m3"><div class="modal">
   <div class="modal-head"><span class="icon">📷</span><h2>Camera Indoor / Outdoor + Thẻ nhớ 64G</h2><button class="modal-close" onclick="closeModal('m3')">✕</button></div>
   <div class="modal-tabs">
-    <button class="tab-btn active" onclick="switchTab('m3','learn')">📖 Nội dung</button>
-    <button class="tab-btn" onclick="switchTab('m3','qa')">📝 Câu hỏi Ôn tập</button>
-    <button class="tab-btn" onclick="switchTab('m3','game')">🎮 Game Ôn luyện</button>
+    <button class="tab-btn t-learn active" onclick="switchTab('m3','learn')"><span class="t-icon">📚</span><span class="t-label">Học</span></button>
+    <button class="tab-btn t-qa" onclick="switchTab('m3','qa')"><span class="t-icon">✍️</span><span class="t-label">Ôn tập</span></button>
+    <button class="tab-btn t-game" onclick="switchTab('m3','game')"><span class="t-icon">🎮</span><span class="t-label">Trò chơi</span></button>
   </div>
   <div class="tab-panel active" id="m3-learn">
     <h3>Cấu hình Tab F3</h3>
@@ -337,10 +343,22 @@ footer{text-align:center;font-size:.78rem;color:#89a;padding:20px}
     </div>
     <h3>Video hướng dẫn</h3>
     <div class="video-list">
-      <div class="video-card"><div class="play">▶</div><div><div class="vname">01 — Camera Indoor + Thẻ 64G</div><div class="vdesc">Trả hàng tháng</div></div></div>
-      <div class="video-card"><div class="play">▶</div><div><div class="vname">02 — Camera Indoor + Thẻ 64G</div><div class="vdesc">Gói 7 tháng</div></div></div>
-      <div class="video-card"><div class="play">▶</div><div><div class="vname">03 — Camera Indoor + Thẻ 64G</div><div class="vdesc">Trả sau — Bao gồm hủy HĐ</div></div></div>
-      <div class="video-card"><div class="play">▶</div><div><div class="vname">04 — Camera Indoor TTN</div><div class="vdesc">Thanh toán ngay — Bao gồm hủy HĐ</div></div></div>
+      <div class="video-card"><a class="video-link" href="https://drive.google.com/file/d/1vgrORhB_4m50u2Wt1UPdlB0z7aKR15Bc/view" target="_blank" rel="noopener">
+        <div class="video-thumb"><div class="play-circle">▶</div><span class="drive-badge">Drive</span></div>
+        <div class="video-info"><div class="vname">01 — Camera Indoor + Thẻ 64G</div><div class="vdesc">Trả hàng tháng</div><div class="vopen">▸ Xem trên Google Drive</div></div>
+      </a></div>
+      <div class="video-card"><a class="video-link" href="https://drive.google.com/file/d/1x9GLgG7AjMJ8X-S77DEKDmlh8EdXc6q_/view" target="_blank" rel="noopener">
+        <div class="video-thumb"><div class="play-circle">▶</div><span class="drive-badge">Drive</span></div>
+        <div class="video-info"><div class="vname">02 — Camera Indoor + Thẻ 64G</div><div class="vdesc">Gói 7 tháng</div><div class="vopen">▸ Xem trên Google Drive</div></div>
+      </a></div>
+      <div class="video-card"><a class="video-link" href="https://drive.google.com/file/d/1cRgo_70pzzCymM6uUHh2_7pxsg2U8uS8/view" target="_blank" rel="noopener">
+        <div class="video-thumb"><div class="play-circle">▶</div><span class="drive-badge">Drive</span></div>
+        <div class="video-info"><div class="vname">03 — Camera Indoor + Thẻ 64G</div><div class="vdesc">Trả sau — Bao gồm hủy HĐ</div><div class="vopen">▸ Xem trên Google Drive</div></div>
+      </a></div>
+      <div class="video-card"><a class="video-link" href="https://drive.google.com/file/d/1dI19_aFxv_oyMujtderqYqM0nyEkXqA7/view" target="_blank" rel="noopener">
+        <div class="video-thumb"><div class="play-circle">▶</div><span class="drive-badge">Drive</span></div>
+        <div class="video-info"><div class="vname">04 — Camera Indoor TTN</div><div class="vdesc">Thanh toán ngay — Bao gồm hủy HĐ</div><div class="vopen">▸ Xem trên Google Drive</div></div>
+      </a></div>
     </div>
   </div>
   <div class="tab-panel" id="m3-qa">
@@ -349,23 +367,19 @@ footer{text-align:center;font-size:.78rem;color:#89a;padding:20px}
       <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">2</span>Kiểu yêu cầu khi lắp Camera là gì?</div><div class="qa-a">✅ <strong>Lắp mới MegaEyes trên Fiber có sẵn</strong></div></div>
       <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">3</span>Loại thiết bị Camera Indoor là model gì?</div><div class="qa-a">✅ <strong>VNPT Smart Camera Indoor IS310P</strong> (Outdoor dùng IS311P)</div></div>
       <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">4</span>Camera Indoor + Thẻ 64G gói 7 tháng tổng tiền bao nhiêu?</div><div class="qa-a">✅ <strong>180,000đ</strong></div></div>
-      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">5</span>Sau khi Ghi lại HĐ Camera, cần kiểm tra điều gì?</div><div class="qa-a">✅ Kiểm tra <strong>TB xuất hiện trong danh sách ⑫</strong> ở phần Thông tin thuê bao bên dưới</div></div>
+      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">5</span>Sau khi Ghi lại HĐ Camera, cần kiểm tra điều gì?</div><div class="qa-a">✅ Kiểm tra <strong>TB xuất hiện trong danh sách ⑫</strong> bên dưới</div></div>
     </div>
   </div>
-  <div class="tab-panel" id="m3-game">
-    <div class="game-box" id="game-m3"></div>
-  </div>
-</div>
-</div>
+  <div class="tab-panel" id="m3-game"><div class="game-box" id="game-m3"></div></div>
+</div></div>
 
-<!-- ===== MODAL M4: CAMERA + CLOUD ===== -->
-<div class="overlay" id="m4">
-<div class="modal">
+<!-- ===== M4 ===== -->
+<div class="overlay" id="m4"><div class="modal">
   <div class="modal-head"><span class="icon">☁️</span><h2>Camera Outdoor + Cloud</h2><button class="modal-close" onclick="closeModal('m4')">✕</button></div>
   <div class="modal-tabs">
-    <button class="tab-btn active" onclick="switchTab('m4','learn')">📖 Nội dung</button>
-    <button class="tab-btn" onclick="switchTab('m4','qa')">📝 Câu hỏi Ôn tập</button>
-    <button class="tab-btn" onclick="switchTab('m4','game')">🎮 Game Ôn luyện</button>
+    <button class="tab-btn t-learn active" onclick="switchTab('m4','learn')"><span class="t-icon">📚</span><span class="t-label">Học</span></button>
+    <button class="tab-btn t-qa" onclick="switchTab('m4','qa')"><span class="t-icon">✍️</span><span class="t-label">Ôn tập</span></button>
+    <button class="tab-btn t-game" onclick="switchTab('m4','game')"><span class="t-icon">🎮</span><span class="t-label">Trò chơi</span></button>
   </div>
   <div class="tab-panel active" id="m4-learn">
     <div class="warn">Gói này gồm <strong>2 thuê bao</strong>: Camera Outdoor PT + Home Cloud Camera. Phải <strong>Thêm TB</strong> rồi mới Ghép gói đa DV.</div>
@@ -373,7 +387,6 @@ footer{text-align:center;font-size:.78rem;color:#89a;padding:20px}
     <table><tr><th>Trường</th><th>Giá trị</th></tr>
     <tr><td>Loại hình ②</td><td><strong>Outdoor Camera PT</strong></td></tr>
     <tr><td>Kiểu YC ③</td><td>Lắp mới MegaEyes trên Fiber có sẵn</td></tr>
-    <tr><td>Mã TN ④</td><td>Account FiberVNN</td></tr>
     <tr><td>Tốc độ ⑥</td><td>Outdoor Camera 022022</td></tr>
     <tr><td>Trang bị ⑦</td><td>Viễn thông trang bị</td></tr>
     <tr><td>Tổng tiền ⑨</td><td><strong>0đ</strong> — điều chỉnh phí cài đặt 55,000đ</td></tr></table>
@@ -384,13 +397,12 @@ footer{text-align:center;font-size:.78rem;color:#89a;padding:20px}
     <tr><td>Mã TN ③</td><td><strong>Account Camera Outdoor</strong> vừa tạo</td></tr>
     <tr><td>Tốc độ ④</td><td>Home Cloud 07</td></tr>
     <tr><td>Trang bị ⑤</td><td>Khách hàng tự trang bị</td></tr>
-    <tr><td>Mức cước TB ⑥</td><td>Cloud 7 + Camera Outdoor</td></tr>
     <tr><td>Tổng tiền ⑩</td><td><strong>360,000đ</strong></td></tr></table>
     <h3>Ghép gói Cloud 7 - Camera Outdoor</h3>
     <div class="steps">
       <div class="step"><div class="step-num">1</div><div class="step-content">Nhấn <strong>Thêm TB</strong> → tạo thuê bao Home Cloud</div></div>
       <div class="step"><div class="step-num">2</div><div class="step-content">Mở menu <strong>(...)</strong> → chọn <strong>Gói đa DV</strong></div></div>
-      <div class="step"><div class="step-num">3</div><div class="step-content">Tên gói: <strong>Gói Cloud 7 - Camera Outdoor</strong> (lưu trữ 7 ngày, 4 TK xem)</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content">Tên gói: <strong>Gói Cloud 7 - Camera Outdoor</strong></div></div>
       <div class="step"><div class="step-num">4</div><div class="step-content">Tích 2 TB: <strong>Home Cloud 07 + Outdoor Camera 022022</strong></div></div>
       <div class="step"><div class="step-num">5</div><div class="step-content">Nhấn <strong>Ghi lại</strong></div></div>
     </div>
@@ -402,37 +414,39 @@ footer{text-align:center;font-size:.78rem;color:#89a;padding:20px}
     </div>
     <h3>Video hướng dẫn</h3>
     <div class="video-list">
-      <div class="video-card"><div class="play">▶</div><div><div class="vname">05 — Camera Outdoor + Cloud 7</div><div class="vdesc">Gói 7 tháng</div></div></div>
-      <div class="video-card"><div class="play">▶</div><div><div class="vname">07 — Pack 1 Indoor + 1 Outdoor</div><div class="vdesc">Gói kết hợp</div></div></div>
+      <div class="video-card"><a class="video-link" href="https://drive.google.com/file/d/1dsPU7d0vRJLDJGukAYuqqr81SBxKXCly/view" target="_blank" rel="noopener">
+        <div class="video-thumb"><div class="play-circle">▶</div><span class="drive-badge">Drive</span></div>
+        <div class="video-info"><div class="vname">05 — Camera Outdoor + Cloud 7</div><div class="vdesc">Gói 7 tháng</div><div class="vopen">▸ Xem trên Google Drive</div></div>
+      </a></div>
+      <div class="video-card"><a class="video-link" href="https://drive.google.com/file/d/1aU3YIVaTup480ZIevyKjPBzANsdqE_fo/view" target="_blank" rel="noopener">
+        <div class="video-thumb"><div class="play-circle">▶</div><span class="drive-badge">Drive</span></div>
+        <div class="video-info"><div class="vname">07 — Pack 1 Indoor + 1 Outdoor</div><div class="vdesc">Gói kết hợp</div><div class="vopen">▸ Xem trên Google Drive</div></div>
+      </a></div>
     </div>
   </div>
   <div class="tab-panel" id="m4-qa">
     <div class="qa-list">
-      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">1</span>Gói Camera Outdoor + Cloud gồm mấy thuê bao?</div><div class="qa-a">✅ <strong>2 thuê bao</strong>: (1) Camera Outdoor PT và (2) Home Cloud Camera</div></div>
-      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">2</span>Mã TN của thuê bao Home Cloud phải điền gì?</div><div class="qa-a">✅ Điền <strong>Account Camera Outdoor</strong> vừa tạo ở thuê bao 1 (không phải Account FiberVNN)</div></div>
-      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">3</span>Trang bị của thuê bao Home Cloud Camera là gì?</div><div class="qa-a">✅ <strong>Khách hàng tự trang bị</strong> (khác với Camera Outdoor là Viễn thông trang bị)</div></div>
+      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">1</span>Gói Camera Outdoor + Cloud gồm mấy thuê bao?</div><div class="qa-a">✅ <strong>2 thuê bao</strong>: Camera Outdoor PT + Home Cloud Camera</div></div>
+      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">2</span>Mã TN của thuê bao Home Cloud phải điền gì?</div><div class="qa-a">✅ Điền <strong>Account Camera Outdoor</strong> vừa tạo ở thuê bao 1</div></div>
+      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">3</span>Trang bị của thuê bao Home Cloud Camera là gì?</div><div class="qa-a">✅ <strong>Khách hàng tự trang bị</strong></div></div>
       <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">4</span>Tổng tiền thuê bao Home Cloud Camera 7 là bao nhiêu?</div><div class="qa-a">✅ <strong>360,000đ</strong></div></div>
-      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">5</span>Tên gói ghép đa DV cho Camera Outdoor + Cloud 7 là gì?</div><div class="qa-a">✅ <strong>Gói Cloud 7 - Camera Outdoor</strong> (lưu trữ 7 ngày, 4 tài khoản xem)</div></div>
+      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">5</span>Tên gói ghép đa DV cho Camera Outdoor + Cloud 7 là gì?</div><div class="qa-a">✅ <strong>Gói Cloud 7 - Camera Outdoor</strong> (lưu trữ 7 ngày, 4 TK xem)</div></div>
     </div>
   </div>
-  <div class="tab-panel" id="m4-game">
-    <div class="game-box" id="game-m4"></div>
-  </div>
-</div>
-</div>
+  <div class="tab-panel" id="m4-game"><div class="game-box" id="game-m4"></div></div>
+</div></div>
 
-<!-- ===== MODAL M5: MESH WIFI ===== -->
-<div class="overlay" id="m5">
-<div class="modal">
+<!-- ===== M5 ===== -->
+<div class="overlay" id="m5"><div class="modal">
   <div class="modal-head"><span class="icon">🌐</span><h2>Mesh Wifi — Mesh 6 & Pack 2 Mesh 5</h2><button class="modal-close" onclick="closeModal('m5')">✕</button></div>
   <div class="modal-tabs">
-    <button class="tab-btn active" onclick="switchTab('m5','learn')">📖 Nội dung</button>
-    <button class="tab-btn" onclick="switchTab('m5','qa')">📝 Câu hỏi Ôn tập</button>
-    <button class="tab-btn" onclick="switchTab('m5','game')">🎮 Game Ôn luyện</button>
+    <button class="tab-btn t-learn active" onclick="switchTab('m5','learn')"><span class="t-icon">📚</span><span class="t-label">Học</span></button>
+    <button class="tab-btn t-qa" onclick="switchTab('m5','qa')"><span class="t-icon">✍️</span><span class="t-label">Ôn tập</span></button>
+    <button class="tab-btn t-game" onclick="switchTab('m5','game')"><span class="t-icon">🎮</span><span class="t-label">Trò chơi</span></button>
   </div>
   <div class="tab-panel active" id="m5-learn">
     <h3>Mesh 6 — Cấu hình Tab F3</h3>
-    <table><tr><th>Trường</th><th>Gói 7 tháng</th><th>Thanh toán ngay (TTN)</th></tr>
+    <table><tr><th>Trường</th><th>Gói 7 tháng</th><th>TTN</th></tr>
     <tr><td>Dịch vụ ①</td><td colspan="2">Băng rộng cố định</td></tr>
     <tr><td>Loại hình ②</td><td colspan="2"><strong>Wifi Mesh</strong></td></tr>
     <tr><td>Kiểu YC ③</td><td colspan="2">Đặt mới Mesh Wifi trên đường quang có sẵn</td></tr>
@@ -443,7 +457,7 @@ footer{text-align:center;font-size:.78rem;color:#89a;padding:20px}
     <h3>Pack 2 Mesh 5 — Ghép gói đa DV</h3>
     <div class="warn">Pack2_M5 = 2 Mesh 5, tiết kiệm 30,000đ VAT. Phải lập <strong>2 TB riêng</strong> rồi mới ghép gói.</div>
     <div class="steps">
-      <div class="step"><div class="step-num">1</div><div class="step-content">Lập TB Mesh 5 thứ nhất (Tốc độ: MESH-2021 / Wifi Mesh 5)</div></div>
+      <div class="step"><div class="step-num">1</div><div class="step-content">Lập TB Mesh 5 thứ nhất (Tốc độ: MESH-2021)</div></div>
       <div class="step"><div class="step-num">2</div><div class="step-content">Nhấn <strong>Thêm TB</strong> → lập TB Mesh 5 thứ hai</div></div>
       <div class="step"><div class="step-num">3</div><div class="step-content">Mở menu <strong>(...)</strong> → chọn <strong>Gói đa DV</strong></div></div>
       <div class="step"><div class="step-num">4</div><div class="step-content">Tên gói: <strong>Pack2_M5</strong> — tích 2 TB Mesh 5 "Lắp mới"</div></div>
@@ -456,74 +470,79 @@ footer{text-align:center;font-size:.78rem;color:#89a;padding:20px}
     </div>
     <h3>Video hướng dẫn</h3>
     <div class="video-list">
-      <div class="video-card"><div class="play">▶</div><div><div class="vname">08 — Mesh 6 TTN</div><div class="vdesc">Thanh toán ngay</div></div></div>
-      <div class="video-card"><div class="play">▶</div><div><div class="vname">09 — Mesh 6</div><div class="vdesc">Gói 7 tháng</div></div></div>
-      <div class="video-card"><div class="play">▶</div><div><div class="vname">10 — Mesh 5 Trả sau</div><div class="vdesc">Bao gồm hủy HĐ</div></div></div>
-      <div class="video-card"><div class="play">▶</div><div><div class="vname">11 — Pack 2 Mesh 5</div><div class="vdesc">Gói 7 tháng</div></div></div>
+      <div class="video-card"><a class="video-link" href="https://drive.google.com/file/d/14KWfKlqF9nPuWrLvdDBqFS_eYK5MSSqv/view" target="_blank" rel="noopener">
+        <div class="video-thumb"><div class="play-circle">▶</div><span class="drive-badge">Drive</span></div>
+        <div class="video-info"><div class="vname">08 — Mesh 6 TTN</div><div class="vdesc">Thanh toán ngay</div><div class="vopen">▸ Xem trên Google Drive</div></div>
+      </a></div>
+      <div class="video-card"><a class="video-link" href="https://drive.google.com/file/d/1aV5u4kaiaQU-evVeSan2fIEAwSZ8RYSZ/view" target="_blank" rel="noopener">
+        <div class="video-thumb"><div class="play-circle">▶</div><span class="drive-badge">Drive</span></div>
+        <div class="video-info"><div class="vname">09 — Mesh 6</div><div class="vdesc">Gói 7 tháng</div><div class="vopen">▸ Xem trên Google Drive</div></div>
+      </a></div>
+      <div class="video-card no-link">
+        <div class="video-thumb"><div class="play-circle">▶</div></div>
+        <div class="video-info"><div class="vname">10 — Mesh 5 Trả sau</div><div class="vdesc">Bao gồm hủy HĐ</div></div>
+      </div>
+      <div class="video-card no-link">
+        <div class="video-thumb"><div class="play-circle">▶</div></div>
+        <div class="video-info"><div class="vname">11 — Pack 2 Mesh 5</div><div class="vdesc">Gói 7 tháng</div></div>
+      </div>
     </div>
   </div>
   <div class="tab-panel" id="m5-qa">
     <div class="qa-list">
       <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">1</span>Kiểu yêu cầu khi lắp Mesh Wifi là gì?</div><div class="qa-a">✅ <strong>Đặt mới Mesh Wifi trên đường quang có sẵn</strong></div></div>
-      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">2</span>Pack2_M5 gồm mấy thành phần Mesh 5?</div><div class="qa-a">✅ <strong>2 thiết bị Mesh 5</strong> — phải lập 2 thuê bao riêng rồi mới ghép gói</div></div>
+      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">2</span>Pack2_M5 gồm mấy thành phần Mesh 5?</div><div class="qa-a">✅ <strong>2 thiết bị Mesh 5</strong></div></div>
       <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">3</span>Mesh 6 gói 7 tháng tổng tiền là bao nhiêu?</div><div class="qa-a">✅ <strong>270,000đ</strong></div></div>
       <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">4</span>Mesh 6 TTN (thanh toán ngay) giá bao nhiêu?</div><div class="qa-a">✅ <strong>646,000đ</strong></div></div>
-      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">5</span>Trang bị khi KH chọn Mesh 6 TTN (mua thiết bị) là gì?</div><div class="qa-a">✅ <strong>Mua thiết bị</strong> (khác với gói 7 tháng là Viễn thông trang bị)</div></div>
+      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">5</span>Trang bị khi KH chọn Mesh 6 TTN là gì?</div><div class="qa-a">✅ <strong>Mua thiết bị</strong> (khác gói 7 tháng là Viễn thông trang bị)</div></div>
     </div>
   </div>
-  <div class="tab-panel" id="m5-game">
-    <div class="game-box" id="game-m5"></div>
-  </div>
-</div>
-</div>
+  <div class="tab-panel" id="m5-game"><div class="game-box" id="game-m5"></div></div>
+</div></div>
 
-<!-- ===== MODAL M6: PACK 03 CAM ===== -->
-<div class="overlay" id="m6">
-<div class="modal">
+<!-- ===== M6 ===== -->
+<div class="overlay" id="m6"><div class="modal">
   <div class="modal-head"><span class="icon">📦</span><h2>Pack 03 CAM — 3 Camera Indoor + 3 Cloud 3 ngày</h2><button class="modal-close" onclick="closeModal('m6')">✕</button></div>
   <div class="modal-tabs">
-    <button class="tab-btn active" onclick="switchTab('m6','learn')">📖 Nội dung</button>
-    <button class="tab-btn" onclick="switchTab('m6','qa')">📝 Câu hỏi Ôn tập</button>
-    <button class="tab-btn" onclick="switchTab('m6','game')">🎮 Game Ôn luyện</button>
+    <button class="tab-btn t-learn active" onclick="switchTab('m6','learn')"><span class="t-icon">📚</span><span class="t-label">Học</span></button>
+    <button class="tab-btn t-qa" onclick="switchTab('m6','qa')"><span class="t-icon">✍️</span><span class="t-label">Ôn tập</span></button>
+    <button class="tab-btn t-game" onclick="switchTab('m6','game')"><span class="t-icon">🎮</span><span class="t-label">Trò chơi</span></button>
   </div>
   <div class="tab-panel active" id="m6-learn">
-    <div class="warn"><strong>Tổng đặt cọc:</strong> 480,000đ / 6 tháng (~79,998đ/tháng) · Dùng <strong>Trả trước gói đa dịch vụ</strong></div>
+    <div class="warn"><strong>Tổng đặt cọc:</strong> 480,000đ / 6 tháng · Dùng <strong>Trả trước gói đa dịch vụ</strong></div>
     <h3>11 bước thao tác</h3>
     <div class="steps">
-      <div class="step"><div class="step-num">1</div><div class="step-content"><strong>Camera Indoor thứ 1:</strong> Dịch vụ Camera/MegaEyes | Indoor Camera PT | Mức cước: 36,364đ</div></div>
-      <div class="step"><div class="step-num">2</div><div class="step-content"><strong>Thêm TB — Cloud thứ 1:</strong> Home Cloud camera | Mã TN = Account Camera thứ 1 | Home Cloud Camera 3: 27,273đ</div></div>
-      <div class="step"><div class="step-num">3</div><div class="step-content">Lặp bước 1–2 → <strong>Camera Indoor thứ 2 + Cloud thứ 2</strong></div></div>
-      <div class="step"><div class="step-num">4</div><div class="step-content">Lặp bước 1–2 → <strong>Camera Indoor thứ 3 + Cloud thứ 3</strong></div></div>
-      <div class="step"><div class="step-num">5</div><div class="step-content">Kiểm tra: đủ <strong>6 thuê bao</strong> (3 Indoor Camera + 3 Home Cloud Camera 3)</div></div>
-      <div class="step"><div class="step-num">6</div><div class="step-content">Mở menu <strong>(...)</strong> → chọn <strong>Gói đa DV</strong></div></div>
-      <div class="step"><div class="step-num">7</div><div class="step-content">Tên gói: <strong>Pack 03 Cam</strong> | Tích 4 TB mới lắp | Ghi lại</div></div>
-      <div class="step"><div class="step-num">8</div><div class="step-content">Mở menu <strong>(...)</strong> → chọn <strong>Trả trước gói đa dịch vụ</strong></div></div>
-      <div class="step"><div class="step-num">9</div><div class="step-content"><strong>Đặt cọc:</strong> Nhóm ĐC = 4 | Trả trước = 13608 | Số tháng = 6 | Cước ĐC = 480,000đ</div></div>
+      <div class="step"><div class="step-num">1</div><div class="step-content"><strong>Camera Indoor thứ 1:</strong> Camera/MegaEyes | Indoor Camera PT | 36,364đ</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><strong>Thêm TB — Cloud thứ 1:</strong> Home Cloud camera | Mã TN = Account Camera 1 | 27,273đ</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content">Lặp bước 1–2 → <strong>Camera 2 + Cloud 2</strong></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content">Lặp bước 1–2 → <strong>Camera 3 + Cloud 3</strong></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-content">Kiểm tra đủ <strong>6 thuê bao</strong> (3 Indoor Camera + 3 Home Cloud Camera 3)</div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-content">Menu <strong>(...)</strong> → <strong>Gói đa DV</strong></div></div>
+      <div class="step"><div class="step-num">7</div><div class="step-content">Tên gói: <strong>Pack 03 Cam</strong> | Tích 4 TB mới | Ghi lại</div></div>
+      <div class="step"><div class="step-num">8</div><div class="step-content">Menu <strong>(...)</strong> → <strong>Trả trước gói đa dịch vụ</strong></div></div>
+      <div class="step"><div class="step-num">9</div><div class="step-content"><strong>Đặt cọc:</strong> Nhóm ĐC = 4 | Trả trước = 13608 | Số tháng = 6 | 480,000đ</div></div>
       <div class="step"><div class="step-num">10</div><div class="step-content">Nhấn <strong>Chấp nhận</strong> → Ghi lại</div></div>
-      <div class="step"><div class="step-num">11</div><div class="step-content"><strong>Thanh toán:</strong> 480,000đ | Tiền mặt | Nộp tiền sau | Đóng trước cước: 436,365đ + VAT 43,635đ</div></div>
+      <div class="step"><div class="step-num">11</div><div class="step-content"><strong>Thanh toán:</strong> 480,000đ | Tiền mặt | Nộp tiền sau</div></div>
     </div>
     <h3>Hình ảnh minh họa</h3>
     <div class="img-grid">
-      <div class="img-item" onclick="lightbox(this)"><img src="" data-src="Pack 03 CAM/Pack 03 CAM - Tab F3 - 1.png" alt="Pack03 B1" loading="lazy"/><div class="img-caption">Bước 1 — Camera Indoor thứ 1</div></div>
-      <div class="img-item" onclick="lightbox(this)"><img src="" data-src="Pack 03 CAM/Pack 03 CAM - Tab F3 - 2.png" alt="Pack03 B2" loading="lazy"/><div class="img-caption">Bước 2 — Home Cloud Camera thứ 1</div></div>
-      <div class="img-item" onclick="lightbox(this)"><img src="" data-src="Pack 03 CAM/Pack 03 CAM - Tab F3 - 5.png" alt="Pack03 B5" loading="lazy"/><div class="img-caption">Bước 7 — Ghép gói Pack 03 Cam</div></div>
-      <div class="img-item" onclick="lightbox(this)"><img src="" data-src="Pack 03 CAM/Pack 03 CAM - Tab F3 - 11.png" alt="Pack03 B11" loading="lazy"/><div class="img-caption">Bước 11 — Thanh toán HĐ</div></div>
+      <div class="img-item" onclick="lightbox(this)"><img src="" data-src="Pack 03 CAM/Pack 03 CAM - Tab F3 - 1.png" alt="B1" loading="lazy"/><div class="img-caption">Bước 1 — Camera Indoor thứ 1</div></div>
+      <div class="img-item" onclick="lightbox(this)"><img src="" data-src="Pack 03 CAM/Pack 03 CAM - Tab F3 - 2.png" alt="B2" loading="lazy"/><div class="img-caption">Bước 2 — Home Cloud Camera thứ 1</div></div>
+      <div class="img-item" onclick="lightbox(this)"><img src="" data-src="Pack 03 CAM/Pack 03 CAM - Tab F3 - 5.png" alt="B5" loading="lazy"/><div class="img-caption">Bước 7 — Ghép gói Pack 03 Cam</div></div>
+      <div class="img-item" onclick="lightbox(this)"><img src="" data-src="Pack 03 CAM/Pack 03 CAM - Tab F3 - 11.png" alt="B11" loading="lazy"/><div class="img-caption">Bước 11 — Thanh toán HĐ</div></div>
     </div>
   </div>
   <div class="tab-panel" id="m6-qa">
     <div class="qa-list">
-      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">1</span>Pack 03 CAM gồm mấy Camera Indoor và mấy Cloud?</div><div class="qa-a">✅ <strong>3 Camera Indoor + 3 Cloud 3 ngày</strong> — tổng 6 thuê bao</div></div>
-      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">2</span>Tổng đặt cọc Pack 03 CAM 6 tháng là bao nhiêu?</div><div class="qa-a">✅ <strong>480,000đ</strong> (khoảng 79,998đ/tháng)</div></div>
-      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">3</span>Nhóm đặt cọc (Nhóm ĐC) phải chọn số mấy?</div><div class="qa-a">✅ Chọn nhóm <strong>4</strong> — Thanh toán tiền cước trước cho gói đa dịch vụ</div></div>
-      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">4</span>Khi thêm thuê bao Cloud cho Camera, Mã TN phải điền gì?</div><div class="qa-a">✅ Điền <strong>Account của Camera Indoor tương ứng</strong> vừa tạo (mỗi Cloud liên kết đúng 1 Camera)</div></div>
+      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">1</span>Pack 03 CAM gồm mấy Camera Indoor và mấy Cloud?</div><div class="qa-a">✅ <strong>3 Camera Indoor + 3 Cloud 3 ngày</strong> = 6 thuê bao</div></div>
+      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">2</span>Tổng đặt cọc Pack 03 CAM 6 tháng là bao nhiêu?</div><div class="qa-a">✅ <strong>480,000đ</strong></div></div>
+      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">3</span>Nhóm đặt cọc (Nhóm ĐC) phải chọn số mấy?</div><div class="qa-a">✅ Số <strong>4</strong></div></div>
+      <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">4</span>Khi thêm TB Cloud, Mã TN phải điền gì?</div><div class="qa-a">✅ <strong>Account Camera Indoor tương ứng</strong> vừa tạo</div></div>
       <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-num">5</span>Pack 03 CAM có tổng cộng mấy bước thao tác?</div><div class="qa-a">✅ <strong>11 bước</strong></div></div>
     </div>
   </div>
-  <div class="tab-panel" id="m6-game">
-    <div class="game-box" id="game-m6"></div>
-  </div>
-</div>
-</div>
+  <div class="tab-panel" id="m6-game"><div class="game-box" id="game-m6"></div></div>
+</div></div>
 
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox()">
@@ -535,154 +554,124 @@ footer{text-align:center;font-size:.78rem;color:#89a;padding:20px}
 
 <script>
 const BASE='https://raw.githubusercontent.com/TH-Thaksin/1166-N2-CAM-MESH/master/';
-
-// ===== QUIZ DATA =====
 const QUIZ={
   m1:[
-    {q:'Camera Indoor + Thẻ 64G gói 7 tháng có giá bao nhiêu?',opts:['180,000đ','646,000đ','946,000đ','270,000đ'],ans:1,ex:'Gói 7 tháng [6+1] Camera Indoor + Thẻ 64G giá 646,000đ.'},
-    {q:'Nên ưu tiên tư vấn KH đăng ký gói mấy tháng?',opts:['1 tháng','3 tháng','6 tháng','7 tháng [6+1]'],ans:3,ex:'Luôn ưu tiên tư vấn gói 7 tháng để KH được hưởng khuyến mãi tháng thứ 7 miễn phí.'},
-    {q:'KH đăng ký trả hàng tháng, khi Thanh toán chọn hình thức nào?',opts:['Tiền mặt — Thu tiền ngay','Không thu tiền / Nộp tiền sau','Chuyển khoản ngân hàng','Quẹt thẻ POS'],ans:1,ex:'Trả sau = Không tích Trả trước + khi Thanh toán chọn "Không thu tiền / Nộp tiền sau".'},
-    {q:'Camera Outdoor + Thẻ 64G trả 1 tháng có giá bao nhiêu?',opts:['30,000đ','40,000đ','50,000đ','60,000đ'],ans:2,ex:'Camera Outdoor + Thẻ 64G 1 tháng = 50,000đ (Camera Indoor = 30,000đ).'},
-    {q:'Quy trình xử lý HĐ trên OneBSS có tổng cộng mấy bước?',opts:['6 bước','7 bước','8 bước','9 bước'],ans:3,ex:'9 bước: Lập HĐ → Ghép gói → Liên hệ → Hẹn LĐ → Thanh toán → Giao phiếu + 3 bước hoàn tác.'},
+    {q:'Camera Indoor + Thẻ 64G gói TTN có giá bao nhiêu?',opts:['180,000đ','646,000đ','946,000đ','270,000đ'],ans:1,ex:'Gói TTN [6+1] Camera Indoor + Thẻ 64G = 646,000đ.'},
+    {q:'Nên ưu tiên tư vấn KH đăng ký gói nào?',opts:['1 tháng','3 tháng','6 tháng','7 tháng [6+1]'],ans:3,ex:'Luôn ưu tiên gói 7 tháng — tháng thứ 7 miễn phí cho KH.'},
+    {q:'KH trả hàng tháng, khi Thanh toán chọn hình thức nào?',opts:['Tiền mặt — Thu ngay','Không thu tiền / Nộp tiền sau','Chuyển khoản','Quẹt thẻ POS'],ans:1,ex:'Trả sau = không tích Trả trước + Thanh toán chọn "Không thu tiền / Nộp tiền sau".'},
+    {q:'Camera Outdoor + Thẻ 64G trả 1 tháng giá bao nhiêu?',opts:['30,000đ','40,000đ','50,000đ','60,000đ'],ans:2,ex:'Camera Outdoor + Thẻ 64G 1 tháng = 50,000đ (Indoor = 30,000đ).'},
+    {q:'Quy trình xử lý HĐ trên OneBSS có tổng bao nhiêu bước?',opts:['6 bước','7 bước','8 bước','9 bước'],ans:3,ex:'9 bước: Lập HĐ → Ghép gói → Liên hệ → Hẹn LĐ → Thanh toán → Giao phiếu + 3 bước hoàn tác.'},
   ],
   m2:[
-    {q:'Kiểu hợp đồng / PL phải chọn giá trị nào?',opts:['Tại văn phòng','Online','Tại nhà','Tại điểm giao dịch'],ans:2,ex:'Luôn chọn "Tại nhà" cho tất cả các loại hợp đồng.'},
-    {q:'Mục Dịch vụ khác cần tích chọn những gì?',opts:['Chỉ SMS','Chỉ Email','SMS và Email','Zalo và SMS'],ans:2,ex:'Phải tích cả hai: Nhận giấy báo cước qua SMS và Nhận giấy báo cước qua Email.'},
-    {q:'Địa chỉ KH cần định danh theo thứ tự nào?',opts:['Số nhà → Đường → Phường → TP','TP → Phường/Xã → Đường → Số nhà','Quận → Phường → Đường → Số nhà','Tỉnh → Huyện → Xã → Đường'],ans:1,ex:'Thứ tự đúng: Thành phố → Phường/Xã → Đường → Số nhà. Phải định danh từng cấp đầy đủ.'},
-    {q:'Mã xác thực Smart OTP lấy từ đâu?',opts:['Tin nhắn SMS','Email','App OneHome','Zalo OA VNPT'],ans:2,ex:'Smart OTP được lấy từ ứng dụng OneHome cài trên điện thoại khách hàng.'},
-    {q:'Tab F2 áp dụng cho những sản phẩm nào?',opts:['Chỉ Camera','Chỉ Mesh Wifi','Chỉ gói Cloud','Tất cả sản phẩm'],ans:3,ex:'Tab F2 là thông tin khách hàng — áp dụng chung cho tất cả sản phẩm: Camera, Mesh, Cloud...'},
+    {q:'Kiểu hợp đồng / PL phải chọn giá trị nào?',opts:['Tại văn phòng','Online','Tại nhà','Tại điểm giao dịch'],ans:2,ex:'Luôn chọn "Tại nhà" cho mọi loại hợp đồng.'},
+    {q:'Mục Dịch vụ khác cần tích chọn những gì?',opts:['Chỉ SMS','Chỉ Email','SMS và Email','Zalo và SMS'],ans:2,ex:'Tích cả hai: SMS và Email để KH nhận giấy báo cước.'},
+    {q:'Địa chỉ KH cần định danh theo thứ tự nào?',opts:['Số nhà → Đường → Phường → TP','TP → Phường/Xã → Đường → Số nhà','Quận → Phường → Đường → Số nhà','Tỉnh → Huyện → Xã → Đường'],ans:1,ex:'Đúng thứ tự: Thành phố → Phường/Xã → Đường → Số nhà.'},
+    {q:'Mã xác thực Smart OTP lấy từ đâu?',opts:['Tin nhắn SMS','Email','App OneHome','Zalo OA'],ans:2,ex:'Smart OTP lấy từ ứng dụng OneHome cài trên điện thoại KH.'},
+    {q:'Tab F2 áp dụng cho những sản phẩm nào?',opts:['Chỉ Camera','Chỉ Mesh','Chỉ Cloud','Tất cả sản phẩm'],ans:3,ex:'Tab F2 áp dụng chung cho tất cả: Camera, Mesh, Cloud... bắt buộc hoàn thành trước F3.'},
   ],
   m3:[
-    {q:'Loại hình cho Camera Indoor phải chọn gì?',opts:['Home Cloud camera','Indoor Camera PT','Outdoor Camera PT','Wifi Mesh'],ans:1,ex:'Camera Indoor dùng loại hình "Indoor Camera PT".'},
-    {q:'Loại thiết bị Camera Indoor là model gì?',opts:['IS311P (Outdoor)','IS310P (Indoor)','Thiết bị Mesh Wifi','Modem FiberVNN'],ans:1,ex:'Indoor dùng IS310P, Outdoor dùng IS311P. Hai model khác nhau.'},
-    {q:'Camera Indoor + Thẻ 64G gói 7 tháng tổng tiền bao nhiêu?',opts:['270,000đ','360,000đ','180,000đ','646,000đ'],ans:2,ex:'Tổng tiền Camera Indoor + Thẻ 64G gói 7 tháng = 180,000đ.'},
-    {q:'Kiểu yêu cầu khi lắp Camera MegaEyes là gì?',opts:['Đặt mới Mesh Wifi','Lắp mới MegaEyes trên Fiber có sẵn','Đặt mới cloud kèm camera','Nâng cấp dịch vụ'],ans:1,ex:'"Lắp mới MegaEyes trên Fiber có sẵn" — Camera lắp thêm vào đường truyền Fiber đã có.'},
-    {q:'Sau khi Ghi lại HĐ Camera, cần kiểm tra điều gì?',opts:['Kiểm tra tổng tiền','Kiểm tra Mã TN','TB xuất hiện trong danh sách bên dưới','Kiểm tra loại thiết bị'],ans:2,ex:'Phải xác nhận TB đã xuất hiện ở danh sách phía dưới (ký hiệu ⑫) trước khi chuyển sang Liên hệ.'},
+    {q:'Loại hình cho Camera Indoor phải chọn gì?',opts:['Home Cloud camera','Indoor Camera PT','Outdoor Camera PT','Wifi Mesh'],ans:1,ex:'Camera Indoor dùng "Indoor Camera PT".'},
+    {q:'Loại thiết bị Camera Indoor là model gì?',opts:['IS311P (Outdoor)','IS310P (Indoor)','Thiết bị Mesh Wifi','Modem FiberVNN'],ans:1,ex:'Indoor = IS310P, Outdoor = IS311P.'},
+    {q:'Camera Indoor + Thẻ 64G gói 7 tháng tổng tiền bao nhiêu?',opts:['270,000đ','360,000đ','180,000đ','646,000đ'],ans:2,ex:'Camera Indoor + Thẻ 64G gói 7 tháng = 180,000đ.'},
+    {q:'Kiểu yêu cầu khi lắp Camera MegaEyes là gì?',opts:['Đặt mới Mesh Wifi','Lắp mới MegaEyes trên Fiber có sẵn','Đặt mới cloud kèm camera','Nâng cấp dịch vụ'],ans:1,ex:'"Lắp mới MegaEyes trên Fiber có sẵn" — Camera lắp thêm vào đường Fiber đã có.'},
+    {q:'Sau khi Ghi lại HĐ Camera, cần kiểm tra điều gì?',opts:['Kiểm tra tổng tiền','Kiểm tra Mã TN','TB xuất hiện trong danh sách ⑫','Kiểm tra loại thiết bị'],ans:2,ex:'Phải xác nhận TB đã xuất hiện ở danh sách ⑫ trước khi chuyển Liên hệ.'},
   ],
   m4:[
-    {q:'Gói Camera Outdoor + Cloud gồm mấy thuê bao cần lập?',opts:['1 thuê bao','2 thuê bao','3 thuê bao','4 thuê bao'],ans:1,ex:'Cần lập 2 TB: (1) Camera Outdoor PT và (2) Home Cloud Camera.'},
-    {q:'Mã TN của thuê bao Home Cloud phải điền gì?',opts:['Account FiberVNN mới','Account Camera Outdoor vừa tạo','Để trống','Mã TN mới hoàn toàn'],ans:1,ex:'Mã TN của TB Cloud = Account Camera Outdoor TB1 vừa tạo, để liên kết cloud với camera.'},
-    {q:'Tốc độ của thuê bao Home Cloud 7 là gì?',opts:['Wifi Mesh 6','Home Cloud 07','Cam_IN_64G','Outdoor Camera 022022'],ans:1,ex:'"Home Cloud 07" là cấu hình tốc độ/gói cho dịch vụ lưu trữ cloud 7 ngày.'},
-    {q:'Trang bị của thuê bao Home Cloud Camera là gì?',opts:['Viễn thông trang bị','Mua thiết bị','Khách hàng tự trang bị','Không có thiết bị'],ans:2,ex:'Home Cloud Camera: "Khách hàng tự trang bị". Camera Outdoor PT: "Viễn thông trang bị".'},
-    {q:'Tổng tiền thuê bao Home Cloud Camera 7 là bao nhiêu?',opts:['180,000đ','270,000đ','360,000đ','480,000đ'],ans:2,ex:'Thuê bao Home Cloud Camera 7 (Cloud 7 + Camera Outdoor) = 360,000đ.'},
+    {q:'Gói Camera Outdoor + Cloud gồm mấy thuê bao cần lập?',opts:['1 thuê bao','2 thuê bao','3 thuê bao','4 thuê bao'],ans:1,ex:'2 TB: (1) Camera Outdoor PT và (2) Home Cloud Camera.'},
+    {q:'Mã TN của thuê bao Home Cloud phải điền gì?',opts:['Account FiberVNN mới','Account Camera Outdoor vừa tạo','Để trống','Mã TN mới'],ans:1,ex:'Mã TN Cloud = Account Camera Outdoor TB1 vừa tạo — để liên kết cloud với camera.'},
+    {q:'Tốc độ của thuê bao Home Cloud 7 là gì?',opts:['Wifi Mesh 6','Home Cloud 07','Cam_IN_64G','Outdoor Camera 022022'],ans:1,ex:'"Home Cloud 07" là cấu hình dịch vụ lưu trữ cloud 7 ngày.'},
+    {q:'Trang bị của thuê bao Home Cloud Camera là gì?',opts:['Viễn thông trang bị','Mua thiết bị','Khách hàng tự trang bị','Không có'],ans:2,ex:'Home Cloud: "Khách hàng tự trang bị". Camera Outdoor: "Viễn thông trang bị".'},
+    {q:'Tổng tiền thuê bao Home Cloud Camera 7 là bao nhiêu?',opts:['180,000đ','270,000đ','360,000đ','480,000đ'],ans:2,ex:'Home Cloud Camera 7 (Cloud 7 + Camera Outdoor) = 360,000đ.'},
   ],
   m5:[
-    {q:'Pack2_M5 gồm mấy thành phần Mesh 5?',opts:['1','2','3','4'],ans:1,ex:'Pack2_M5 = 2 thiết bị Mesh 5, tiết kiệm 30,000đ (đã VAT).'},
+    {q:'Pack2_M5 gồm mấy thành phần Mesh 5?',opts:['1','2','3','4'],ans:1,ex:'Pack2_M5 = 2 thiết bị Mesh 5, tiết kiệm 30,000đ VAT.'},
     {q:'Mesh 6 gói 7 tháng tổng tiền là bao nhiêu?',opts:['180,000đ','270,000đ','360,000đ','646,000đ'],ans:1,ex:'Mesh 6 gói 7 tháng = 270,000đ.'},
-    {q:'Kiểu yêu cầu khi lắp Mesh Wifi là gì?',opts:['Lắp mới MegaEyes','Đặt mới cloud kèm camera','Đặt mới Mesh Wifi trên đường quang có sẵn','Nâng cấp băng thông'],ans:2,ex:'"Đặt mới Mesh Wifi trên đường quang có sẵn" — Mesh lắp thêm vào đường quang đang dùng.'},
+    {q:'Kiểu yêu cầu khi lắp Mesh Wifi là gì?',opts:['Lắp mới MegaEyes','Đặt mới cloud kèm camera','Đặt mới Mesh Wifi trên đường quang có sẵn','Nâng cấp băng thông'],ans:2,ex:'"Đặt mới Mesh Wifi trên đường quang có sẵn".'},
     {q:'Tên gói ghép 2 thiết bị Mesh 5 là gì?',opts:['Pack2_M6','Pack2_M5','Pack03Cam','Gói Cloud 7'],ans:1,ex:'Tên gói ghép 2 Mesh 5 là "Pack2_M5".'},
     {q:'Mesh 6 TTN (Thanh toán ngay) giá bao nhiêu?',opts:['270,000đ','480,000đ','646,000đ','946,000đ'],ans:2,ex:'Mesh 6 TTN = 646,000đ (bao gồm chi phí thiết bị KH mua).'},
   ],
   m6:[
-    {q:'Pack 03 CAM gồm mấy Camera Indoor và mấy Cloud?',opts:['1 Camera + 1 Cloud','2 Camera + 2 Cloud','3 Camera + 3 Cloud','6 Camera + 6 Cloud'],ans:2,ex:'Pack 03 CAM = 3 Camera Indoor + 3 Cloud 3 ngày = tổng 6 thuê bao.'},
+    {q:'Pack 03 CAM gồm mấy Camera Indoor và mấy Cloud?',opts:['1 Cam + 1 Cloud','2 Cam + 2 Cloud','3 Cam + 3 Cloud','6 Cam + 6 Cloud'],ans:2,ex:'Pack 03 CAM = 3 Camera Indoor + 3 Cloud 3 ngày = 6 thuê bao tổng.'},
     {q:'Tổng đặt cọc Pack 03 CAM 6 tháng là bao nhiêu?',opts:['360,000đ','430,000đ','480,000đ','646,000đ'],ans:2,ex:'Tổng đặt cọc = 480,000đ (436,365đ + VAT 43,635đ) / 6 tháng.'},
     {q:'Nhóm đặt cọc (Nhóm ĐC) phải chọn số mấy?',opts:['1','2','3','4'],ans:3,ex:'Nhóm ĐC = 4: Thanh toán tiền cước trước cho gói đa dịch vụ.'},
-    {q:'Khi thêm TB Cloud cho Camera, Mã TN phải điền gì?',opts:['Account FiberVNN mới','Mã TN chung','Account Camera Indoor tương ứng','Để trống'],ans:2,ex:'Mỗi TB Cloud phải liên kết đúng với Account Camera Indoor tương ứng, không điền nhầm.'},
-    {q:'Pack 03 CAM có tổng cộng mấy bước thao tác?',opts:['7 bước','9 bước','11 bước','13 bước'],ans:2,ex:'Pack 03 CAM có 11 bước: từ lập Camera thứ 1 đến Thanh toán HĐ cuối cùng.'},
+    {q:'Khi thêm TB Cloud cho Camera, Mã TN phải điền gì?',opts:['Account FiberVNN mới','Mã TN chung','Account Camera Indoor tương ứng','Để trống'],ans:2,ex:'Mỗi TB Cloud liên kết đúng với Account Camera Indoor tương ứng.'},
+    {q:'Pack 03 CAM có tổng cộng mấy bước thao tác?',opts:['7 bước','9 bước','11 bước','13 bước'],ans:2,ex:'Pack 03 CAM có 11 bước: từ lập Camera 1 đến Thanh toán HĐ.'},
   ],
 };
 
-// ===== QUIZ STATE =====
 const state={};
 const LETTERS=['A','B','C','D'];
 
 function buildGame(mid){
   const box=document.getElementById('game-'+mid);
   if(!box)return;
-  if(!state[mid]) state[mid]={cur:0,score:0,done:false};
-  const s=state[mid];
-  const qs=QUIZ[mid];
-  const total=qs.length;
-
-  if(s.done){
-    renderScore(box,mid,s.score,total);
-    return;
-  }
-
+  if(!state[mid])state[mid]={cur:0,score:0,done:false};
+  const s=state[mid],qs=QUIZ[mid],total=qs.length;
+  if(s.done){renderScore(box,mid,s.score,total);return;}
   const q=qs[s.cur];
   const pct=Math.round((s.cur/total)*100);
-
   box.innerHTML=`
     <div class="game-header">
-      <span class="game-title">🎮 Game Ôn luyện</span>
-      <span class="game-progress">Câu ${s.cur+1} / ${total} · Điểm: ${s.score}</span>
+      <span class="game-title">🎮 Trò chơi Ôn luyện</span>
+      <span class="game-progress">Câu ${s.cur+1}/${total} · Điểm: ${s.score}</span>
     </div>
     <div class="progress-bar-wrap"><div class="progress-bar" style="width:${pct}%"></div></div>
     <div class="game-body">
       <div class="quiz-q">${q.q}</div>
       <div class="quiz-opts" id="opts-${mid}">
-        ${q.opts.map((o,i)=>`<div class="quiz-opt" onclick="pick('${mid}',${i})" id="opt-${mid}-${i}">
-          <span class="opt-letter">${LETTERS[i]}</span>${o}
-        </div>`).join('')}
+        ${q.opts.map((o,i)=>`<div class="quiz-opt" onclick="pick('${mid}',${i})" id="opt-${mid}-${i}"><span class="opt-letter">${LETTERS[i]}</span>${o}</div>`).join('')}
       </div>
       <div class="quiz-explain" id="ex-${mid}">${q.ex}</div>
-      <button class="quiz-next" id="next-${mid}" onclick="nextQ('${mid}')">
-        ${s.cur+1<total?'Câu tiếp theo →':'Xem kết quả 🏆'}
-      </button>
+      <button class="quiz-next" id="next-${mid}" onclick="nextQ('${mid}')">${s.cur+1<total?'Câu tiếp theo →':'Xem kết quả 🏆'}</button>
     </div>`;
 }
-
 function pick(mid,idx){
-  const s=state[mid];
-  const q=QUIZ[mid][s.cur];
-  const opts=document.querySelectorAll(`#opts-${mid} .quiz-opt`);
-  opts.forEach(o=>o.classList.add('disabled'));
-  opts[idx].classList.add(idx===q.ans?'correct':'wrong');
-  if(idx!==q.ans) opts[q.ans].classList.add('correct');
-  if(idx===q.ans) s.score++;
+  const s=state[mid],q=QUIZ[mid][s.cur];
+  document.querySelectorAll(`#opts-${mid} .quiz-opt`).forEach(o=>o.classList.add('disabled'));
+  document.getElementById(`opt-${mid}-${idx}`).classList.add(idx===q.ans?'correct':'wrong');
+  if(idx!==q.ans)document.getElementById(`opt-${mid}-${q.ans}`).classList.add('correct');
+  if(idx===q.ans)s.score++;
   document.getElementById(`ex-${mid}`).classList.add('show');
   document.getElementById(`next-${mid}`).classList.add('show');
 }
-
 function nextQ(mid){
   state[mid].cur++;
-  if(state[mid].cur>=QUIZ[mid].length) state[mid].done=true;
+  if(state[mid].cur>=QUIZ[mid].length)state[mid].done=true;
   buildGame(mid);
 }
-
 function renderScore(box,mid,score,total){
   const pct=Math.round((score/total)*100);
-  let emoji='😔',msg='Cần ôn thêm!',stars='☆☆☆☆☆';
+  let emoji='😔',msg='Cần ôn thêm nhé!',stars='☆☆☆☆☆';
   if(pct>=80){emoji='🏆';msg='Xuất sắc!';stars='⭐⭐⭐⭐⭐';}
   else if(pct>=60){emoji='😊';msg='Khá tốt!';stars='⭐⭐⭐⭐☆';}
-  else if(pct>=40){emoji='🙂';msg='Cần cố gắng thêm!';stars='⭐⭐⭐☆☆';}
+  else if(pct>=40){emoji='🙂';msg='Cố gắng thêm!';stars='⭐⭐⭐☆☆';}
   box.innerHTML=`
-    <div class="game-header">
-      <span class="game-title">🎮 Kết quả</span>
-      <span class="game-progress">${score}/${total} câu đúng</span>
-    </div>
+    <div class="game-header"><span class="game-title">🎮 Kết quả</span><span class="game-progress">${score}/${total} đúng</span></div>
     <div class="game-score show">
       <div class="score-emoji">${emoji}</div>
       <div class="score-stars">${stars}</div>
       <div class="score-text">${msg}</div>
-      <div class="score-sub">Bạn trả lời đúng <strong>${score}/${total}</strong> câu (${pct}%)</div>
+      <div class="score-sub">Đúng <strong>${score}/${total}</strong> câu (${pct}%)</div>
       <button class="btn-replay" onclick="replayGame('${mid}')">🔄 Chơi lại</button>
     </div>`;
 }
+function replayGame(mid){state[mid]={cur:0,score:0,done:false};buildGame(mid);}
 
-function replayGame(mid){
-  state[mid]={cur:0,score:0,done:false};
-  buildGame(mid);
-}
-
-// ===== TABS =====
 function switchTab(mid,tab){
   ['learn','qa','game'].forEach(t=>{
     const p=document.getElementById(`${mid}-${t}`);
-    if(p) p.classList.toggle('active',t===tab);
+    if(p)p.classList.toggle('active',t===tab);
   });
   document.querySelectorAll(`#${mid} .tab-btn`).forEach((b,i)=>{
     b.classList.toggle('active',['learn','qa','game'][i]===tab);
   });
-  if(tab==='game') buildGame(mid);
+  if(tab==='game')buildGame(mid);
 }
 
-// ===== MODAL =====
 function openModal(id){
-  const el=document.getElementById(id);
-  el.classList.add('open');
+  document.getElementById(id).classList.add('open');
   document.body.style.overflow='hidden';
-  el.querySelectorAll('img[data-src]').forEach(resolveSrc);
+  document.getElementById(id).querySelectorAll('img[data-src]').forEach(resolveSrc);
 }
 function closeModal(id){
   document.getElementById(id).classList.remove('open');
@@ -698,24 +687,16 @@ document.addEventListener('keydown',e=>{
   }
 });
 
-// ===== Q&A =====
-function toggleQA(el){
-  el.closest('.qa-item').classList.toggle('open');
-}
+function toggleQA(el){el.closest('.qa-item').classList.toggle('open');}
 
-// ===== IMAGES =====
 function resolveSrc(img){
   if(!img.getAttribute('data-loaded')){
     const path=img.getAttribute('data-src');
-    if(path){
-      img.src=BASE+path.split('/').map(encodeURIComponent).join('/');
-      img.setAttribute('data-loaded','1');
-    }
+    if(path){img.src=BASE+path.split('/').map(encodeURIComponent).join('/');img.setAttribute('data-loaded','1');}
   }
 }
 function lightbox(item){
-  const img=item.querySelector('img');
-  resolveSrc(img);
+  const img=item.querySelector('img');resolveSrc(img);
   document.getElementById('lbImg').src=img.src;
   document.getElementById('lightbox').classList.add('open');
   document.body.style.overflow='hidden';
