@@ -1,160 +1,641 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hướng dẫn Lập HĐ Camera & Mesh Wifi - VNPT</title>
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: #f4f6f9;
-      color: #222;
-      line-height: 1.7;
-    }
-    header {
-      background: linear-gradient(135deg, #c00 0%, #e63030 100%);
-      color: #fff;
-      padding: 24px 32px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    }
-    header .logo {
-      font-size: 2rem;
-      font-weight: 900;
-      letter-spacing: 2px;
-      background: #fff;
-      color: #c00;
-      padding: 4px 12px;
-      border-radius: 6px;
-    }
-    header h1 {
-      font-size: 1.25rem;
-      font-weight: 600;
-      line-height: 1.3;
-    }
-    header p { font-size: 0.85rem; opacity: 0.85; margin-top: 2px; }
-    .container {
-      max-width: 960px;
-      margin: 32px auto;
-      padding: 0 16px 64px;
-    }
-    #content {
-      background: #fff;
-      border-radius: 10px;
-      padding: 40px 48px;
-      box-shadow: 0 1px 6px rgba(0,0,0,0.08);
-    }
-    #content h1 { font-size: 1.7rem; color: #c00; margin-bottom: 8px; }
-    #content h2 {
-      font-size: 1.2rem;
-      color: #c00;
-      border-left: 4px solid #c00;
-      padding-left: 12px;
-      margin: 32px 0 14px;
-    }
-    #content h3 {
-      font-size: 1.05rem;
-      color: #333;
-      margin: 20px 0 10px;
-      font-weight: 700;
-    }
-    #content h4 { font-size: 0.98rem; color: #555; margin: 16px 0 8px; }
-    #content p { margin: 8px 0; }
-    #content ul, #content ol { margin: 8px 0 8px 24px; }
-    #content li { margin: 4px 0; }
-    #content table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 14px 0;
-      font-size: 0.88rem;
-    }
-    #content th {
-      background: #c00;
-      color: #fff;
-      padding: 8px 12px;
-      text-align: left;
-    }
-    #content td {
-      padding: 7px 12px;
-      border-bottom: 1px solid #eee;
-    }
-    #content tr:nth-child(even) td { background: #fafafa; }
-    #content tr:hover td { background: #fff5f5; }
-    #content code {
-      background: #f0f0f0;
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-size: 0.85rem;
-      font-family: monospace;
-    }
-    #content pre {
-      background: #f5f5f5;
-      padding: 16px;
-      border-radius: 6px;
-      overflow-x: auto;
-      margin: 12px 0;
-    }
-    #content pre code { background: none; padding: 0; }
-    #content blockquote {
-      border-left: 4px solid #e63030;
-      background: #fff5f5;
-      padding: 10px 16px;
-      margin: 14px 0;
-      border-radius: 0 6px 6px 0;
-      color: #b00;
-    }
-    #content hr {
-      border: none;
-      border-top: 2px solid #eee;
-      margin: 28px 0;
-    }
-    #content strong { color: #c00; }
-    .loading {
-      text-align: center;
-      padding: 60px;
-      color: #888;
-      font-size: 1rem;
-    }
-    footer {
-      text-align: center;
-      font-size: 0.8rem;
-      color: #aaa;
-      padding: 16px;
-    }
-    @media (max-width: 600px) {
-      #content { padding: 20px 16px; }
-      header { flex-direction: column; align-items: flex-start; gap: 8px; }
-    }
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Hướng dẫn LHĐ Camera & Mesh Wifi — VNPT</title>
+<style>
+:root{
+  --blue:#0057A8;--blue-dark:#003F7A;--blue-mid:#1976D2;
+  --blue-light:#E3F0FB;--accent:#00A0E3;--white:#fff;
+  --gray:#f4f7fc;--text:#1a2a3a;--border:#d0e3f5;
+  --shadow:0 4px 20px rgba(0,87,168,.13);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--gray);color:var(--text);min-height:100vh}
+
+/* HEADER */
+header{
+  background:linear-gradient(135deg,var(--blue-dark) 0%,var(--blue-mid) 100%);
+  color:var(--white);padding:0;
+  box-shadow:0 3px 12px rgba(0,63,122,.4);
+}
+.header-inner{
+  max-width:1100px;margin:0 auto;
+  padding:20px 24px;
+  display:flex;align-items:center;gap:20px;
+}
+.vnpt-logo{
+  background:var(--white);color:var(--blue-dark);
+  font-weight:900;font-size:1.6rem;letter-spacing:2px;
+  padding:6px 14px;border-radius:8px;flex-shrink:0;
+  line-height:1;
+}
+.header-text h1{font-size:1.2rem;font-weight:700;line-height:1.3}
+.header-text p{font-size:.82rem;opacity:.8;margin-top:3px}
+
+/* GRID */
+.container{max-width:1100px;margin:32px auto 64px;padding:0 16px}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+@media(max-width:800px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.grid{grid-template-columns:1fr}}
+
+/* CARD */
+.card{
+  background:var(--white);border-radius:14px;
+  box-shadow:var(--shadow);border:1.5px solid var(--border);
+  cursor:pointer;overflow:hidden;
+  transition:transform .18s,box-shadow .18s;
+  display:flex;flex-direction:column;
+}
+.card:hover{transform:translateY(-4px);box-shadow:0 8px 32px rgba(0,87,168,.2)}
+.card-icon{
+  background:linear-gradient(135deg,var(--blue) 0%,var(--accent) 100%);
+  height:90px;display:flex;align-items:center;justify-content:center;
+  font-size:2.6rem;
+}
+.card-body{padding:18px 16px 20px;flex:1;display:flex;flex-direction:column}
+.card-title{font-size:.98rem;font-weight:700;color:var(--blue-dark);margin-bottom:6px}
+.card-desc{font-size:.82rem;color:#556;line-height:1.5;flex:1}
+.card-btn{
+  margin-top:14px;align-self:flex-start;
+  background:var(--blue);color:var(--white);
+  border:none;padding:7px 18px;border-radius:20px;
+  font-size:.8rem;font-weight:600;cursor:pointer;
+  transition:background .15s;
+}
+.card-btn:hover{background:var(--blue-dark)}
+
+/* MODAL */
+.overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,30,70,.55);z-index:1000;
+  align-items:flex-start;justify-content:center;
+  padding:24px 12px;overflow-y:auto;
+}
+.overlay.open{display:flex}
+.modal{
+  background:var(--white);border-radius:16px;
+  max-width:860px;width:100%;
+  box-shadow:0 12px 48px rgba(0,0,0,.25);
+  animation:slideUp .22s ease;position:relative;
+  margin:auto;
+}
+@keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-head{
+  background:linear-gradient(135deg,var(--blue-dark),var(--blue-mid));
+  color:var(--white);padding:20px 24px;border-radius:16px 16px 0 0;
+  display:flex;align-items:center;gap:14px;
+}
+.modal-head .icon{font-size:1.8rem}
+.modal-head h2{font-size:1.1rem;font-weight:700}
+.modal-close{
+  margin-left:auto;background:rgba(255,255,255,.2);border:none;
+  color:var(--white);width:32px;height:32px;border-radius:50%;
+  font-size:1.2rem;cursor:pointer;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .15s;
+}
+.modal-close:hover{background:rgba(255,255,255,.35)}
+.modal-body{padding:24px;max-height:75vh;overflow-y:auto}
+
+/* CONTENT STYLES */
+.modal-body h3{
+  color:var(--blue-dark);font-size:1rem;
+  border-left:4px solid var(--blue);padding-left:10px;
+  margin:20px 0 10px;
+}
+.modal-body h3:first-child{margin-top:0}
+.modal-body p{font-size:.88rem;line-height:1.7;margin:6px 0}
+.modal-body ul,.modal-body ol{font-size:.88rem;margin:6px 0 6px 20px;line-height:1.8}
+.modal-body strong{color:var(--blue-dark)}
+.note{
+  background:#fff8e1;border-left:4px solid #f59e0b;
+  padding:10px 14px;border-radius:0 8px 8px 0;
+  font-size:.85rem;color:#7a5000;margin:12px 0;
+}
+.warn{
+  background:#e8f5ff;border-left:4px solid var(--blue);
+  padding:10px 14px;border-radius:0 8px 8px 0;
+  font-size:.85rem;color:#00407a;margin:12px 0;
+}
+
+/* TABLE */
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.83rem}
+th{background:var(--blue);color:var(--white);padding:8px 10px;text-align:left}
+td{padding:7px 10px;border-bottom:1px solid #e8eef5}
+tr:nth-child(even) td{background:#f7faff}
+tr:hover td{background:#eef4ff}
+
+/* IMAGES */
+.img-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:12px 0}
+@media(max-width:600px){.img-grid{grid-template-columns:1fr}}
+.img-item{border-radius:8px;overflow:hidden;border:1px solid var(--border);cursor:zoom-in}
+.img-item img{width:100%;display:block;transition:transform .2s}
+.img-item:hover img{transform:scale(1.02)}
+.img-caption{font-size:.75rem;text-align:center;padding:5px;background:#f7faff;color:#556}
+
+/* VIDEO CARDS */
+.video-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:12px 0}
+@media(max-width:500px){.video-list{grid-template-columns:1fr}}
+.video-card{
+  background:var(--blue-light);border:1px solid var(--border);
+  border-radius:10px;padding:12px 14px;
+  display:flex;align-items:flex-start;gap:10px;
+}
+.video-card .play{
+  width:36px;height:36px;border-radius:50%;
+  background:var(--blue);color:var(--white);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;font-size:.95rem;
+}
+.video-card .vname{font-size:.82rem;font-weight:600;color:var(--blue-dark);line-height:1.4}
+.video-card .vdesc{font-size:.75rem;color:#557;margin-top:2px}
+
+/* STEPS */
+.steps{counter-reset:step;margin:12px 0}
+.step{
+  display:flex;gap:12px;align-items:flex-start;
+  padding:10px 0;border-bottom:1px solid #eef;
+}
+.step:last-child{border-bottom:none}
+.step-num{
+  width:28px;height:28px;border-radius:50%;
+  background:var(--blue);color:var(--white);
+  font-size:.8rem;font-weight:700;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+}
+.step-content{font-size:.85rem;line-height:1.6}
+.step-content strong{color:var(--blue-dark)}
+
+/* IMAGE LIGHTBOX */
+.lightbox{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.88);z-index:2000;
+  align-items:center;justify-content:center;
+}
+.lightbox.open{display:flex}
+.lightbox img{max-width:95vw;max-height:92vh;border-radius:6px;box-shadow:0 4px 32px rgba(0,0,0,.5)}
+.lightbox-close{
+  position:fixed;top:16px;right:20px;
+  background:rgba(255,255,255,.15);border:none;color:#fff;
+  font-size:1.8rem;cursor:pointer;width:40px;height:40px;
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+}
+
+footer{text-align:center;font-size:.78rem;color:#89a;padding:20px}
+</style>
 </head>
 <body>
-  <header>
-    <div class="logo">VNPT</div>
-    <div>
+
+<header>
+  <div class="header-inner">
+    <div class="vnpt-logo">VNPT</div>
+    <div class="header-text">
       <h1>Hướng dẫn Lập Hợp đồng — Camera & Mesh Wifi</h1>
-      <p>Hệ thống OneBSS · Tài liệu đào tạo nội bộ</p>
-    </div>
-  </header>
-  <div class="container">
-    <div id="content">
-      <div class="loading">Đang tải tài liệu...</div>
+      <p>Hệ thống OneBSS · Tài liệu đào tạo nội bộ · Liên hệ hỗ trợ: <strong style="color:#7df">0886001813</strong> (Em Thanh P.)</p>
     </div>
   </div>
-  <footer>VNPT · Tài liệu nội bộ · Cập nhật 2026</footer>
-  <script>
-    fetch('./TOM_TAT_NOI_DUNG.md')
-      .then(r => r.text())
-      .then(md => {
-        document.getElementById('content').innerHTML = marked.parse(md);
-      })
-      .catch(() => {
-        document.getElementById('content').innerHTML =
-          '<p style="color:red">Không tải được tài liệu. Vui lòng thử lại.</p>';
-      });
-  </script>
+</header>
+
+<div class="container">
+  <div class="grid">
+
+    <!-- Card 1 -->
+    <div class="card" onclick="openModal('m1')">
+      <div class="card-icon">💰</div>
+      <div class="card-body">
+        <div class="card-title">Chính sách bán hàng</div>
+        <div class="card-desc">Bảng giá các gói Camera Indoor, Outdoor, Cloud và ưu tiên tư vấn gói 7 tháng.</div>
+        <button class="card-btn">Xem chi tiết</button>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="card" onclick="openModal('m2')">
+      <div class="card-icon">📋</div>
+      <div class="card-body">
+        <div class="card-title">Tab F2 — Thông tin khách hàng</div>
+        <div class="card-desc">Hướng dẫn điền đúng các trường thông tin khách hàng trước khi sang Tab F3.</div>
+        <button class="card-btn">Xem chi tiết</button>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="card" onclick="openModal('m3')">
+      <div class="card-icon">📷</div>
+      <div class="card-body">
+        <div class="card-title">Camera Indoor / Outdoor + Thẻ 64G</div>
+        <div class="card-desc">Quy trình lập HĐ Camera với thẻ nhớ 64GB. Gói 1 tháng, 7 tháng và trả sau.</div>
+        <button class="card-btn">Xem chi tiết</button>
+      </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="card" onclick="openModal('m4')">
+      <div class="card-icon">☁️</div>
+      <div class="card-body">
+        <div class="card-title">Camera Outdoor + Cloud</div>
+        <div class="card-desc">Lập HĐ 2 thuê bao: Camera Outdoor PT + Home Cloud camera, ghép gói Cloud 7.</div>
+        <button class="card-btn">Xem chi tiết</button>
+      </div>
+    </div>
+
+    <!-- Card 5 -->
+    <div class="card" onclick="openModal('m5')">
+      <div class="card-icon">🌐</div>
+      <div class="card-body">
+        <div class="card-title">Mesh Wifi (Mesh 6 & Pack 2 Mesh 5)</div>
+        <div class="card-desc">Lập HĐ Wifi Mesh 6 và ghép gói Pack2_M5 (2 thiết bị Mesh 5, 30k VAT).</div>
+        <button class="card-btn">Xem chi tiết</button>
+      </div>
+    </div>
+
+    <!-- Card 6 -->
+    <div class="card" onclick="openModal('m6')">
+      <div class="card-icon">📦</div>
+      <div class="card-body">
+        <div class="card-title">Pack 03 CAM</div>
+        <div class="card-desc">Gói 3 Camera Indoor + 3 Cloud 3 ngày. Đặt cọc 480,000đ / 6 tháng — 11 bước thao tác.</div>
+        <button class="card-btn">Xem chi tiết</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== MODALS ===== -->
+
+<!-- M1: Chính sách bán hàng -->
+<div class="overlay" id="m1">
+<div class="modal">
+  <div class="modal-head">
+    <span class="icon">💰</span>
+    <h2>Chính sách bán hàng</h2>
+    <button class="modal-close" onclick="closeModal('m1')">✕</button>
+  </div>
+  <div class="modal-body">
+    <div class="warn">Ưu tiên tư vấn <strong>gói 7 tháng [6+1]</strong>. Trường hợp KH trả hàng tháng (trả sau): không tích Trả trước ở F3, khi Thanh toán chọn <em>Không thu tiền / Nộp tiền sau</em>.</div>
+
+    <h3>Bảng giá các gói Camera</h3>
+    <table>
+      <tr><th>Gói dịch vụ</th><th>1 tháng</th><th>6–7 tháng</th><th>TTN</th></tr>
+      <tr><td>Camera Indoor + Thẻ 64G</td><td>30,000đ</td><td>646,000đ</td><td>—</td></tr>
+      <tr><td>Camera Outdoor + Thẻ 64G</td><td>50,000đ</td><td>946,000đ</td><td>—</td></tr>
+      <tr><td>Camera Indoor + Cloud 7</td><td>40,000đ</td><td>❌</td><td>—</td></tr>
+      <tr><td>Camera Indoor + Cloud 15</td><td>60,000đ</td><td>❌</td><td>—</td></tr>
+      <tr><td>Camera Indoor + Cloud 30</td><td>90,000đ</td><td>❌</td><td>—</td></tr>
+      <tr><td>Camera Outdoor + Cloud 7</td><td>60,000đ</td><td>❌</td><td>—</td></tr>
+      <tr><td>Camera Outdoor + Cloud 15</td><td>80,000đ</td><td>❌</td><td>—</td></tr>
+      <tr><td>Camera Outdoor + Cloud 30</td><td>110,000đ</td><td>❌</td><td>—</td></tr>
+    </table>
+
+    <h3>Quy trình xử lý HĐ trên OneBSS (9 bước)</h3>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><strong>Lập hợp đồng</strong> → Trạng thái: Mới tiếp nhận</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><strong>Ghép gói đa dịch vụ</strong> (áp dụng khi có gói combo)</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content"><strong>Liên hệ</strong></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content"><strong>Hẹn lắp đặt</strong></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-content"><strong>Thanh toán</strong> → Trạng thái: Đã thanh toán</div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-content"><strong>Giao phiếu thi công</strong> → Trạng thái: Đã giao thi công</div></div>
+      <div class="step"><div class="step-num">7</div><div class="step-content"><strong>Hủy giao</strong> (khi cần hoàn tác bước 6)</div></div>
+      <div class="step"><div class="step-num">8</div><div class="step-content"><strong>Xóa thanh toán</strong> (khi cần hoàn tác bước 5)</div></div>
+      <div class="step"><div class="step-num">9</div><div class="step-content"><strong>Sửa / Xóa HĐ</strong> (khi cần hoàn tác bước 1)</div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- M2: Tab F2 -->
+<div class="overlay" id="m2">
+<div class="modal">
+  <div class="modal-head">
+    <span class="icon">📋</span>
+    <h2>Tab F2 — Thông tin khách hàng</h2>
+    <button class="modal-close" onclick="closeModal('m2')">✕</button>
+  </div>
+  <div class="modal-body">
+    <div class="note">Tab F2 áp dụng <strong>chung cho mọi sản phẩm</strong> trước khi chuyển sang Tab F3 điền thông tin thuê bao.</div>
+
+    <h3>Hướng dẫn điền từng trường</h3>
+    <table>
+      <tr><th>#</th><th>Trường</th><th>Hướng dẫn</th></tr>
+      <tr><td>①</td><td>Kiểu hợp đồng / PL</td><td>Chọn <strong>Tại nhà</strong></td></tr>
+      <tr><td>②</td><td>Công tác viên</td><td>Nhập <strong>Mã HRM</strong> của mình</td></tr>
+      <tr><td>②</td><td>Người giới thiệu</td><td>Nhập <strong>Mã HRM</strong> người giới thiệu</td></tr>
+      <tr><td>③</td><td>Địa chỉ KH (*)</td><td>Định danh đầy đủ: <strong>Thành phố → Phường/Xã → Đường → Số nhà</strong></td></tr>
+      <tr><td></td><td>Giới tính</td><td>Điền đúng giới tính khách hàng</td></tr>
+      <tr><td></td><td>Ngành nghề</td><td>Chọn ngành nghề phù hợp</td></tr>
+      <tr><td></td><td>Ngày sinh</td><td>Điền ngày sinh khách hàng</td></tr>
+      <tr><td>④</td><td>Dịch vụ khác</td><td>Tích: <strong>Nhận giấy báo cước qua SMS</strong> và <strong>Email</strong></td></tr>
+      <tr><td>⑤</td><td>Email</td><td>Nhập email khách hàng (nếu có)</td></tr>
+    </table>
+
+    <h3>Hình ảnh minh họa</h3>
+    <div class="img-grid">
+      <div class="img-item" onclick="lightbox(this)">
+        <img src="" data-src="Hình ảnh các bước LHĐ/1 - LHĐ Tab F2.png" alt="LHĐ Tab F2" loading="lazy"/>
+        <div class="img-caption">① Tab F2 — Thông tin khách hàng</div>
+      </div>
+    </div>
+
+    <h3>Video hướng dẫn liên quan</h3>
+    <div class="video-list">
+      <div class="video-card"><div class="play">▶</div><div><div class="vname">06 — Lấy mã OTP / Mã xác thực</div><div class="vdesc">Hướng dẫn lấy Smart OTP trên App OneHome</div></div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- M3: Camera + Thẻ 64G -->
+<div class="overlay" id="m3">
+<div class="modal">
+  <div class="modal-head">
+    <span class="icon">📷</span>
+    <h2>Camera Indoor / Outdoor + Thẻ nhớ 64G</h2>
+    <button class="modal-close" onclick="closeModal('m3')">✕</button>
+  </div>
+  <div class="modal-body">
+    <h3>Thông tin cấu hình Tab F3</h3>
+    <table>
+      <tr><th>Trường</th><th>Camera Indoor</th><th>Camera Outdoor</th></tr>
+      <tr><td>Dịch vụ</td><td colspan="2">Camera / MegaEyes</td></tr>
+      <tr><td>Loại hình</td><td><strong>Indoor Camera PT</strong></td><td><strong>Outdoor Camera PT</strong></td></tr>
+      <tr><td>Kiểu YC</td><td colspan="2">Lắp mới MegaEyes trên Fiber có sẵn</td></tr>
+      <tr><td>Mã TN ④</td><td colspan="2">Account FiberVNN</td></tr>
+      <tr><td>Số điện thoại ⑤</td><td colspan="2">SĐT dùng Camera</td></tr>
+      <tr><td>Mã xác thực ⑥</td><td colspan="2">Smart OTP trên App OneHome</td></tr>
+      <tr><td>Tốc độ</td><td>Cam_IN_64G</td><td>Cam_OUT-64G</td></tr>
+      <tr><td>Trang bị ⑦</td><td colspan="2">Viễn thông trang bị</td></tr>
+      <tr><td>Loại thiết bị ⑧</td><td>VNPT Smart Camera Indoor IS310P</td><td>VNPT Smart Camera Outdoor IS311P</td></tr>
+      <tr><td>Trả trước ⑨</td><td colspan="2">Trả trước các gói Camera thẻ nhớ 64G</td></tr>
+      <tr><td>Tổng tiền</td><td><strong>180,000đ</strong> (7 tháng)</td><td>—</td></tr>
+    </table>
+
+    <div class="note">Sau bước Ghi lại: kiểm tra thuê bao xuất hiện ở danh sách bên dưới ⑫ trước khi chuyển sang Liên hệ.</div>
+
+    <h3>Hình ảnh minh họa</h3>
+    <div class="img-grid">
+      <div class="img-item" onclick="lightbox(this)">
+        <img src="" data-src="Hình ảnh các bước LHĐ/4 - LHĐ Camera 64G Tab F3.png" alt="Camera 64G Tab F3" loading="lazy"/>
+        <div class="img-caption">④ Tab F3 — Camera Indoor + Thẻ 64G</div>
+      </div>
+    </div>
+
+    <h3>Video hướng dẫn</h3>
+    <div class="video-list">
+      <div class="video-card"><div class="play">▶</div><div><div class="vname">01 — Camera Indoor + Thẻ 64G</div><div class="vdesc">Trả hàng tháng</div></div></div>
+      <div class="video-card"><div class="play">▶</div><div><div class="vname">02 — Camera Indoor + Thẻ 64G</div><div class="vdesc">Gói 7 tháng</div></div></div>
+      <div class="video-card"><div class="play">▶</div><div><div class="vname">03 — Camera Indoor + Thẻ 64G</div><div class="vdesc">Trả sau — Bao gồm hủy HĐ</div></div></div>
+      <div class="video-card"><div class="play">▶</div><div><div class="vname">04 — Camera Indoor TTN</div><div class="vdesc">Thanh toán ngay — Bao gồm hủy HĐ</div></div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- M4: Camera + Cloud -->
+<div class="overlay" id="m4">
+<div class="modal">
+  <div class="modal-head">
+    <span class="icon">☁️</span>
+    <h2>Camera Outdoor + Cloud</h2>
+    <button class="modal-close" onclick="closeModal('m4')">✕</button>
+  </div>
+  <div class="modal-body">
+    <div class="warn">Gói này gồm <strong>2 thuê bao</strong>: Thuê bao Camera Outdoor PT + Thuê bao Home Cloud Camera. Phải <strong>Thêm TB</strong> rồi mới Ghép gói đa DV.</div>
+
+    <h3>Thuê bao 1 — Camera Outdoor PT</h3>
+    <table>
+      <tr><th>Trường</th><th>Giá trị</th></tr>
+      <tr><td>Dịch vụ ①</td><td>Camera / MegaEyes</td></tr>
+      <tr><td>Loại hình ②</td><td><strong>Outdoor Camera PT</strong></td></tr>
+      <tr><td>Kiểu YC ③</td><td>Lắp mới MegaEyes trên Fiber có sẵn</td></tr>
+      <tr><td>Mã TN ④</td><td>Account FiberVNN</td></tr>
+      <tr><td>Số ĐT ⑤</td><td>SĐT dùng Camera</td></tr>
+      <tr><td>Tốc độ ⑥</td><td>Outdoor Camera 022022</td></tr>
+      <tr><td>Trang bị ⑦</td><td>Viễn thông trang bị</td></tr>
+      <tr><td>Loại thiết bị ⑧</td><td>VNPT Smart Camera Outdoor</td></tr>
+      <tr><td>Tổng tiền ⑨</td><td><strong>0đ</strong> — cần điều chỉnh phí cài đặt 55,000đ</td></tr>
+    </table>
+
+    <h3>Thuê bao 2 — Home Cloud Camera (Thêm TB)</h3>
+    <table>
+      <tr><th>Trường</th><th>Giá trị</th></tr>
+      <tr><td>Loại hình ①</td><td><strong>Home Cloud camera</strong></td></tr>
+      <tr><td>Kiểu YC ②</td><td>Đặt mới cloud kèm camera</td></tr>
+      <tr><td>Mã TN ③</td><td><strong>Account Camera Outdoor</strong> (vừa tạo ở TB1)</td></tr>
+      <tr><td>Tốc độ ④</td><td>Home Cloud 07</td></tr>
+      <tr><td>Trang bị ⑤</td><td>Khách hàng tự trang bị</td></tr>
+      <tr><td>Mức cước TB ⑥</td><td>Cloud 7 + Camera Outdoor</td></tr>
+      <tr><td>Trả trước ⑦</td><td>Trả trước gói cước Home Cloud Camera</td></tr>
+      <tr><td>Tổng tiền ⑩</td><td><strong>360,000đ</strong></td></tr>
+    </table>
+
+    <h3>Ghép gói đa dịch vụ</h3>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-content">Nhấn <strong>Thêm TB ⑨</strong> để thêm thuê bao Cloud</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content">Mở menu <strong>(...)</strong> góc trên phải → chọn <strong>Gói đa DV</strong></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content">Tên gói: <strong>Gói Cloud 7 - Camera Outdoor</strong><br/><em>Mô tả: Lưu trữ 7 ngày | 4 TK xem | 01 Camera Outdoor</em></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content">Tích chọn cả 2 TB: <strong>Home Cloud 07 + Outdoor Camera 022022</strong></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-content">Nhấn <strong>Ghi lại</strong></div></div>
+    </div>
+
+    <h3>Hình ảnh minh họa</h3>
+    <div class="img-grid">
+      <div class="img-item" onclick="lightbox(this)">
+        <img src="" data-src="Hình ảnh các bước LHĐ/5 - LHĐ [Camera] Cloud Tab F3.png" alt="Camera Cloud Tab F3" loading="lazy"/>
+        <div class="img-caption">⑤ Thuê bao Camera Outdoor PT</div>
+      </div>
+      <div class="img-item" onclick="lightbox(this)">
+        <img src="" data-src="Hình ảnh các bước LHĐ/6 - LHĐ Camera [Cloud] Tab F3.png" alt="Home Cloud Tab F3" loading="lazy"/>
+        <div class="img-caption">⑥ Thuê bao Home Cloud Camera</div>
+      </div>
+      <div class="img-item" onclick="lightbox(this)">
+        <img src="" data-src="Hình ảnh các bước LHĐ/7 - LHĐ Ghép gói Cloud 7 Camera Outdoor.png" alt="Ghep goi Cloud 7" loading="lazy"/>
+        <div class="img-caption">⑦ Ghép gói Cloud 7 - Camera Outdoor</div>
+      </div>
+    </div>
+
+    <h3>Video hướng dẫn</h3>
+    <div class="video-list">
+      <div class="video-card"><div class="play">▶</div><div><div class="vname">05 — Camera Outdoor + Cloud 7</div><div class="vdesc">Gói 7 tháng</div></div></div>
+      <div class="video-card"><div class="play">▶</div><div><div class="vname">07 — Pack 1 Indoor + 1 Outdoor</div><div class="vdesc">Gói kết hợp 1 IN + 1 OUT</div></div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- M5: Mesh Wifi -->
+<div class="overlay" id="m5">
+<div class="modal">
+  <div class="modal-head">
+    <span class="icon">🌐</span>
+    <h2>Mesh Wifi — Mesh 6 & Pack 2 Mesh 5</h2>
+    <button class="modal-close" onclick="closeModal('m5')">✕</button>
+  </div>
+  <div class="modal-body">
+
+    <h3>Mesh 6 — Cấu hình Tab F3</h3>
+    <table>
+      <tr><th>Trường</th><th>Gói 7 tháng</th><th>Thanh toán ngay (TTN)</th></tr>
+      <tr><td>Dịch vụ ①</td><td colspan="2">Băng rộng cố định</td></tr>
+      <tr><td>Loại hình ②</td><td colspan="2"><strong>Wifi Mesh</strong></td></tr>
+      <tr><td>Kiểu YC ③</td><td colspan="2">Đặt mới Mesh Wifi trên đường quang có sẵn</td></tr>
+      <tr><td>Mã TN ④</td><td colspan="2">Account FiberVNN</td></tr>
+      <tr><td>Tốc độ ⑤</td><td>Wifi Mesh 6</td><td>Wifi Mesh 6 TTN</td></tr>
+      <tr><td>Trang bị ⑥</td><td>Viễn thông trang bị</td><td>Mua thiết bị</td></tr>
+      <tr><td>Loại thiết bị ⑦</td><td colspan="2">Thiết bị Mesh Wifi</td></tr>
+      <tr><td>Trả trước ⑧</td><td>Wifi Mesh 6 add-on đơn lẻ</td><td>Trả trước gói Mesh TTN</td></tr>
+      <tr><td>Tổng tiền</td><td><strong>270,000đ</strong></td><td><strong>646,000đ</strong></td></tr>
+    </table>
+
+    <h3>Pack 2 Mesh 5 — Ghép gói đa dịch vụ</h3>
+    <div class="warn">Pack2_M5 = 2 thành phần Mesh 5, tiết kiệm 30,000đ (cả VAT). Cần lập <strong>2 thuê bao Mesh 5</strong> riêng trước rồi mới ghép gói.</div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-content">Lập HĐ thuê bao Mesh 5 thứ nhất (Tốc độ: MESH-2021 / Wifi Mesh 5)</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content">Nhấn <strong>Thêm TB</strong> → lập thuê bao Mesh 5 thứ hai</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content">Mở menu <strong>(...)</strong> → chọn <strong>Gói đa DV</strong></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content">Tên gói: <strong>Pack2_M5</strong> — tích chọn 2 TB Mesh 5 "Lắp mới"</div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-content">Nhấn <strong>Ghi lại</strong> → kiểm tra gói ghép bên phải</div></div>
+    </div>
+
+    <h3>Hình ảnh minh họa</h3>
+    <div class="img-grid">
+      <div class="img-item" onclick="lightbox(this)">
+        <img src="" data-src="Hình ảnh các bước LHĐ/2 - LHĐ Mesh 6 Tab F3.png" alt="Mesh 6 Tab F3" loading="lazy"/>
+        <div class="img-caption">② Tab F3 — Mesh 6</div>
+      </div>
+      <div class="img-item" onclick="lightbox(this)">
+        <img src="" data-src="Hình ảnh các bước LHĐ/3 - LHĐ Ghép gói Pack2-M5.png" alt="Ghep goi Pack2-M5" loading="lazy"/>
+        <div class="img-caption">③ Ghép gói Pack2-M5</div>
+      </div>
+    </div>
+
+    <h3>Video hướng dẫn</h3>
+    <div class="video-list">
+      <div class="video-card"><div class="play">▶</div><div><div class="vname">08 — Mesh 6 TTN</div><div class="vdesc">Thanh toán ngay</div></div></div>
+      <div class="video-card"><div class="play">▶</div><div><div class="vname">09 — Mesh 6</div><div class="vdesc">Gói 7 tháng</div></div></div>
+      <div class="video-card"><div class="play">▶</div><div><div class="vname">10 — Mesh 5 Trả sau</div><div class="vdesc">Bao gồm hủy HĐ</div></div></div>
+      <div class="video-card"><div class="play">▶</div><div><div class="vname">11 — Pack 2 Mesh 5</div><div class="vdesc">Gói 7 tháng</div></div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- M6: Pack 03 CAM -->
+<div class="overlay" id="m6">
+<div class="modal">
+  <div class="modal-head">
+    <span class="icon">📦</span>
+    <h2>Pack 03 CAM — 3 Camera Indoor + 3 Cloud 3 ngày</h2>
+    <button class="modal-close" onclick="closeModal('m6')">✕</button>
+  </div>
+  <div class="modal-body">
+    <div class="warn"><strong>Tổng đặt cọc:</strong> 480,000đ / 6 tháng (~79,998đ/tháng) · <strong>Trả trước gói đa dịch vụ</strong> (không phải trả trước đơn lẻ)</div>
+
+    <h3>11 bước thao tác</h3>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><strong>Tab F3 — Camera Indoor thứ 1:</strong> Dịch vụ Camera/MegaEyes | Loại hình: Indoor Camera PT | Mức cước: Indoor Camera 022022 - 36,364đ | Đối tượng: KHCN hộ gia đình</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><strong>Thêm TB — Cloud cho Camera 1:</strong> Loại hình: Home Cloud camera | Kiểu YC: Đặt mới cloud kèm camera | Mức cước: Home Cloud Camera 3 - 27,273đ | Mã TN = Account Camera Indoor vừa tạo</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content">Lặp lại bước 1–2 để tạo thêm <strong>Camera Indoor thứ 2 + Cloud thứ 2</strong></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content">Lặp lại bước 1–2 để tạo thêm <strong>Camera Indoor thứ 3 + Cloud thứ 3</strong></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-content">Kiểm tra danh sách: đủ <strong>6 thuê bao</strong> (3 Indoor Camera PT + 3 Home Cloud Camera 3)</div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-content">Mở menu <strong>(...)</strong> góc trên phải → chọn <strong>Gói đa DV</strong></div></div>
+      <div class="step"><div class="step-num">7</div><div class="step-content">Tên gói: <strong>Pack 03 Cam</strong> | Tích chọn 4 thuê bao mới lắp | Nhấn Ghi lại</div></div>
+      <div class="step"><div class="step-num">8</div><div class="step-content">Mở menu <strong>(...)</strong> → chọn <strong>Trả trước gói đa dịch vụ</strong></div></div>
+      <div class="step"><div class="step-num">9</div><div class="step-content"><strong>Đặt cọc trả trước:</strong> Nhóm ĐC = 4 | Trả trước = 13608 | Số tháng = 6 | Cước ĐC = 480,000 | Tích tất cả 6 TB</div></div>
+      <div class="step"><div class="step-num">10</div><div class="step-content">Nhấn <strong>Chấp nhận</strong> → Ghi lại đặt cọc</div></div>
+      <div class="step"><div class="step-num">11</div><div class="step-content"><strong>Thanh toán:</strong> Tổng 480,000đ | Hình thức: Tiền mặt | Kênh thu: Nộp tiền sau | Khoản mục: Đóng trước cước 436,365đ + VAT 43,635đ</div></div>
+    </div>
+
+    <h3>Hình ảnh minh họa (11 bước)</h3>
+    <div class="img-grid">
+      <div class="img-item" onclick="lightbox(this)">
+        <img src="" data-src="Pack 03 CAM/Pack 03 CAM - Tab F3 - 1.png" alt="Pack03 B1" loading="lazy"/>
+        <div class="img-caption">Bước 1 — Camera Indoor thứ 1</div>
+      </div>
+      <div class="img-item" onclick="lightbox(this)">
+        <img src="" data-src="Pack 03 CAM/Pack 03 CAM - Tab F3 - 2.png" alt="Pack03 B2" loading="lazy"/>
+        <div class="img-caption">Bước 2 — Home Cloud Camera thứ 1</div>
+      </div>
+      <div class="img-item" onclick="lightbox(this)">
+        <img src="" data-src="Pack 03 CAM/Pack 03 CAM - Tab F3 - 3.png" alt="Pack03 B3" loading="lazy"/>
+        <div class="img-caption">Bước 3–5 — Danh sách 6 thuê bao</div>
+      </div>
+      <div class="img-item" onclick="lightbox(this)">
+        <img src="" data-src="Pack 03 CAM/Pack 03 CAM - Tab F3 - 5.png" alt="Pack03 B5" loading="lazy"/>
+        <div class="img-caption">Bước 7 — Ghép gói Pack 03 Cam</div>
+      </div>
+      <div class="img-item" onclick="lightbox(this)">
+        <img src="" data-src="Pack 03 CAM/Pack 03 CAM - Tab F3 - 7.png" alt="Pack03 B7" loading="lazy"/>
+        <div class="img-caption">Bước 9 — Đặt cọc trả trước</div>
+      </div>
+      <div class="img-item" onclick="lightbox(this)">
+        <img src="" data-src="Pack 03 CAM/Pack 03 CAM - Tab F3 - 11.png" alt="Pack03 B11" loading="lazy"/>
+        <div class="img-caption">Bước 11 — Màn hình Thanh toán HĐ</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lbImg" src="" alt=""/>
+</div>
+
+<footer>VNPT · Tài liệu đào tạo nội bộ · 2026</footer>
+
+<script>
+const BASE = 'https://raw.githubusercontent.com/TH-Thaksin/1166-N2-CAM-MESH/master/';
+
+function resolveSrc(img) {
+  if (!img.src || img.src === window.location.href) {
+    const path = img.getAttribute('data-src');
+    if (path) img.src = BASE + path.split('/').map(encodeURIComponent).join('/');
+  }
+}
+
+function openModal(id) {
+  const el = document.getElementById(id);
+  el.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  el.querySelectorAll('img[data-src]').forEach(resolveSrc);
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.querySelectorAll('.overlay').forEach(ov => {
+  ov.addEventListener('click', e => { if (e.target === ov) closeModal(ov.id); });
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.overlay.open').forEach(ov => closeModal(ov.id));
+    closeLightbox();
+  }
+});
+
+function lightbox(item) {
+  const img = item.querySelector('img');
+  resolveSrc(img);
+  document.getElementById('lbImg').src = img.src;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+</script>
 </body>
 </html>
